@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UsuarioService } from '../shared/usuario.service';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
@@ -11,7 +12,7 @@ export class EsqueciSenhaComponent implements OnInit {
   formEsqueciSenha: FormGroup;
 
   constructor(
-    private formBuilder: FormBuilder,
+    private formBuilder: FormBuilder, private usuarioService: UsuarioService,
     private toast: ToastrService) { }
 
   ngOnInit() {

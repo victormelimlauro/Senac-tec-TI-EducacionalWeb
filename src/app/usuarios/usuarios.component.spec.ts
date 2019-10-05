@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { UsuariosSharedComponent } from './usuarios-shared.component';
+import { UsuariosComponent } from './usuarios.component';
 
-describe('UsuariosSharedComponent', () => {
-  let component: UsuariosSharedComponent;
-  let fixture: ComponentFixture<UsuariosSharedComponent>;
+describe('UsuariosComponent', () => {
+  let component: UsuariosComponent;
+  let fixture: ComponentFixture<UsuariosComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ UsuariosSharedComponent ]
+      declarations: [ UsuariosComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(UsuariosSharedComponent);
+    fixture = TestBed.createComponent(UsuariosComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
