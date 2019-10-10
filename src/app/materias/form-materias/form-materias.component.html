@@ -1,0 +1,18 @@
+<h3>Nova categoria</h3>
+<hr>
+<form [formGroup]="formMaterias" (ngSubmit)="onSubmit()">
+
+  <div class="form-group">
+    <label for="nome">Nome Da Turma</label>
+    <input type="text" class="form-control" id="nome" placeholder="Nome" formControlName="nome">
+  </div>
+  <div *ngIf="nome.invalid && (nome.dirty || nome.touched)" class="alert alert-danger">
+    <div *ngIf="nome.errors?.required">
+      O nome da turma é obrigatório.
+    </div>
+  </div>
+
+  <button type="submit" class="btn btn-primary">Salvar</button>
+  <a class="btn btn-secondary ml-2" [routerLink]="['/categorias']">Voltar</a>
+
+</form>

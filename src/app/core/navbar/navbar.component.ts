@@ -18,12 +18,11 @@ export class NavbarComponent implements OnInit {
   ngOnInit() {
   }
 
-  // sair(){
-  //   this.usuario.logout()
-  //   .then( () => {
-  //       this.router.navigate(['/login']);
-  //   });
+  sair(){
+    this.usuario.logout()
+    .then( ()=>{
+        this.router.navigate(['/login']);
+    });
 
-  // }
-
+  }
 }

@@ -1,3 +1,49 @@
-<p>
-  dashboard works!
-</p>
+<div class="row">
+  <div class="col-md-4 col-sm-12">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">Usuários</h5>
+        <p class="card-text">Cadastre e edite professores, alunos e administratores do sistema.</p>
+        <a class="btn btn-primary" [routerLink]="['/usuarios']"> >Acessar</a>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-4 col-sm-12">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">Turmas</h5>
+        <p class="card-text">Gerencie as tumras de alunos de sua escola</p>
+        <a class="btn btn-primary" [routerLink]="['/turmas']"> >Acessar</a>
+      </div>
+    </div>
+  </div>
+    <div class="col-md-4 col-sm-12">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Matérias</h5>
+          <p class="card-text">Gerencie as matérias lecionadas em sua escola</p>
+          <a class="btn btn-primary" [routerLink]="['/materias']"> >Acessar</a>
+        </div>
+      </div>
+  </div>
+  <br> <br><br>
+</div><div class="row">
+  <div class="col-sm-6">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">Plantões</h5>
+        <p class="card-text">Gerencie a agenda de plantões de dúvidas de sua escola</p>
+        <a class="btn btn-primary" [routerLink]="['/plantoes']"> >Acessar</a>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-6">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">Visitas aos Plantões</h5>
+        <p class="card-text">Gerencie a agenda de plantões de dúvidas de sua escola</p>
+        <a class="btn btn-primary" [routerLink]="['/plantoes/visitas']"> >Acessar</a>
+      </div>
+    </div>
+  </div>
+</div>
