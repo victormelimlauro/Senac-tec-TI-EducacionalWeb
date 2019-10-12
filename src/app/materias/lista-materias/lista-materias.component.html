@@ -1,3 +1,31 @@
-<p>
-  lista-materias works!
-</p>
+<h3>Materias</h3>
+<hr>
+<div class="card">
+  <div class="card-header text-right">
+    <a class="btn btn-primary" role="button" [routerLink]="['/materias/nova']">Nova materia</a>
+  </div>
+  <div class="card-body">
+    <table class="table grid">
+      <thead>
+        <tr>
+          <th scope="col">Nome</th>
+          <th scope="col"></th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let materia of materias | async" >
+          <td>{{ materia.nome }}</td>
+          <td>{{ materia.descricao }}</td>
+          <td class="edit">
+            <a class="btn btn-warning text-white" role="button" [routerLink]="['/materias/editar', materia.key]"><i class="far fa-edit"></i>Editar</a>
+          </td>
+          <td class="delete">
+            <button class="btn btn-danger" (click)="remover(materia.key)"><i class="far fa-trash-alt"></i>Excluir</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+

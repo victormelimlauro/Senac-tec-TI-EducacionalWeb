@@ -1,3 +1,5 @@
+import { ListaUsuariosComponent } from './usuarios/lista-usuarios/lista-usuarios.component';
+import { AuthGuard } from './usuarios/shared/auth.guard';
 import { ListaVisitasComponent } from './plantoes/visitas/lista-visitas/lista-visitas.component';
 import { FormVisitasComponent } from './plantoes/visitas/form-visitas/form-visitas.component';
 import { FormTurmasComponent } from './turmas/form-turmas/form-turmas.component';
@@ -10,7 +12,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 import { HomeLayoutComponent } from './layout/home-layout/home-layout.component';
-import { AuthGuard } from './auth.guard';
+
 import { LoginComponent } from './usuarios/login/login.component';
 import { CriarContaComponent } from './usuarios/criar-conta/criar-conta.component';
 import { EsqueciSenhaComponent } from './usuarios/esqueci-senha/esqueci-senha.component';
@@ -22,7 +24,7 @@ const routes: Routes = [
  {
   path: '',
   component: HomeLayoutComponent,
-  canActivate: [AuthGuard],
+  canActivate: [],
   children:[
     { path: 'dashboard', component: DashboardComponent },
     { path: 'criar-conta', component:  CriarContaComponent},
@@ -36,12 +38,16 @@ const routes: Routes = [
     { path: 'plantoes/visitas/editar/:key', component:  FormVisitasComponent},
 
     { path: 'materias', component:  ListaMateriasComponent},
-    { path: 'materias/novo', component:  FormMateriasComponent},
+    { path: 'materias/nova', component:  FormMateriasComponent},
     { path: 'materias/editar/:key', component:  FormMateriasComponent},
 
     { path: 'turmas', component:  ListaTurmasComponent},
-    { path: 'turmas/novo', component:  FormTurmasComponent},
+    { path: 'turmas/nova', component:  FormTurmasComponent},
     { path: 'turmas/editar/:key', component:  FormTurmasComponent},
+
+    { path: 'usuarios', component:  ListaUsuariosComponent},
+    { path: 'usuarios/novo', component:  CriarContaComponent},
+    { path: 'usarios/editar/:key', component:  CriarContaComponent},
 
     { path: '', redirectTo:  '/dashboard', pathMatch: 'full' }
     ]

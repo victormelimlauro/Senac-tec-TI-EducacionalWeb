@@ -1,3 +1,4 @@
+import { finalize } from 'rxjs/operators';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { UsuarioService } from '../shared/usuario.service';
@@ -11,7 +12,7 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class CriarContaComponent implements OnInit {
   formCriarConta: FormGroup;
-
+  public aluno: boolean = false;
   constructor(
     private formBuilder: FormBuilder, private usuarioService: UsuarioService,
     private router: Router, private toast: ToastrService) { }
@@ -23,13 +24,23 @@ export class CriarContaComponent implements OnInit {
   get nome() { return this.formCriarConta.get('nome'); }
   get email() { return this.formCriarConta.get('email'); }
   get senha() { return this.formCriarConta.get('senha'); }
+  get tipo() { return this.formCriarConta.get('tipo'); }
+  get turma() { return this.formCriarConta.get('truma'); }
 
   criarFormulario() {
     this.formCriarConta = this.formBuilder.group({
       nome: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
-      senha: ['', Validators.required]
+      senha: ['', Validators.required],
+      tipo: ['', Validators.required],
+      turma: [''],
     });
+  }
+
+  setTipo(){
+    // if(this.tipo.value.aluno){
+    //   this.aluno = true;
+    // }
   }
 
   onSubmit() {

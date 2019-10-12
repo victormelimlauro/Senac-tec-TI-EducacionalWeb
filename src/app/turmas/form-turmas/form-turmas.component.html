@@ -1,3 +1,18 @@
-<p>
-  form-turmas works!
-</p>
+<h3>{{ title }}</h3>
+<hr>
+<form [formGroup]="formTurmas" (ngSubmit)="onSubmit()">
+
+  <div class="form-group">
+    <label for="nome">Nome Da turma</label>
+    <input type="text" class="form-control" id="nome" placeholder="Nome" formControlName="nome">
+  </div>
+  <div *ngIf="nome.invalid && (nome.dirty || nome.touched)" class="alert alert-danger">
+    <div *ngIf="nome.errors?.required">
+      O nome da turma é obrigatório.
+    </div>
+  </div>
+
+  <button type="submit" class="btn btn-primary">Salvar</button>
+  <a class="btn btn-secondary ml-2" [routerLink]="['/turmas']">Voltar</a>
+
+</form>

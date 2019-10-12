@@ -13,6 +13,8 @@ import { ToastrService } from 'ngx-toastr';
 export class FormMateriasComponent implements OnInit {
 formMaterias: FormGroup;
 key: string;
+title: string;
+
 
   constructor(private formBuilder: FormBuilder,
               private route: ActivatedRoute,
@@ -23,8 +25,10 @@ key: string;
 
   ngOnInit() {
     this.criarFormulario();
+    this.title= "Nova matéria";
     this.key = this.route.snapshot.paramMap.get('key');
     if (this.key) {
+      this.title= "Editar matéria";
       const materiasSubscribe = this.materiasService.getByKey(this.key)
         .subscribe((materias:any) => {
 
@@ -36,13 +40,13 @@ key: string;
   }
 
   get nome() { return this.formMaterias.get('nome'); }
-  get descricao() { return this.formMaterias.get('descricao'); }
+  // get descricao() { return this.formMaterias.get('descricao'); }
 
   criarFormulario() {
     this.key = null;
     this.formMaterias = this.formBuilder.group({
       nome: ['', Validators.required],
-      descricao: [''],
+      // descricao: [''],
     });
   }
 
@@ -53,8 +57,8 @@ key: string;
       } else {
         this.materiasService.insert(this.formMaterias.value);
       }
-      this.router.navigate(['categorias']);
-      this.toastr.success('Categoria salva com sucesso!!!');
+      this.router.navigate(['materias']);
+      this.toastr.success('Materia salva com sucesso!!!');
     }
   }
 

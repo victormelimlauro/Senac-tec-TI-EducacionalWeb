@@ -9,15 +9,15 @@ export class MateriasService {
 materiasRef: AngularFireList<any>;
 
   constructor(private db: AngularFireDatabase) {
-    this.materiasRef = this.db.list('categorias/');
+    this.materiasRef = this.db.list('materias/');
    }
 
-  insert(categoria: any) {
-    return this.materiasRef.push(categoria);
+  insert(materia: any) {
+    return this.materiasRef.push(materia);
   }
 
-  // update(categoria: any, key: string) {
-  //   this.categoriasRef.update(key,categoria);
+  // update(materia: any, key: string) {
+  //   this.materiasRef.update(key,materia);
   // }
 
   update(materias: any, key: string) {

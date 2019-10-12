@@ -1,3 +1,34 @@
-<p>
-  lista-plantoes works!
-</p>
+<h3>Plantões</h3>
+<hr>
+<div class="card">
+  <div class="card-header text-right">
+    <a class="btn btn-primary" role="button" [routerLink]="['/plantoes/novo']">Novo plantão</a>
+  </div>
+  <div class="card-body">
+    <table class="table grid">
+      <thead>
+        <tr>
+          <th scope="col">Dia</th>
+          <th scope="col">Matéria</th>
+          <th scope="col">Hora início</th>
+          <th scope="col">Hora Fim</th>
+          <th scope="col">Professor</th>
+          <th scope="col">Sala</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let plantao of plantoes | async" >
+          <td>{{ plantao.nome }}</td>
+          <td>{{ plantao.descricao }}</td>
+          <td class="edit">
+            <a class="btn btn-warning text-white" role="button" [routerLink]="['/plantoes/editar', plantao.key]"><i class="far fa-edit"></i>Editar</a>
+          </td>
+          <td class="delete">
+            <button class="btn btn-danger" (click)="remover(plantao.key)"><i class="far fa-trash-alt"></i>Excluir</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
