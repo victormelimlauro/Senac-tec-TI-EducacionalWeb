@@ -6,7 +6,7 @@ import { AngularFireStorage } from '@angular/fire/storage';
 @Injectable({
   providedIn: 'root'
 })
-export class ProdutosService {
+export class PlantoesService {
   plantoesRef: AngularFireList<any>;
 
   constructor(private db: AngularFireDatabase, private storage: AngularFireStorage) {
@@ -68,29 +68,6 @@ export class ProdutosService {
 
   remove(key: string, filePath: string) {
     this.plantoesRef.remove(key);
-    if (filePath) {
-      this.removeImg(filePath, key, false);
-    }
   }
 
-  uploadImg(key: string, file: File) {
-    const filePath = 'plantoes/'+key;
-    const ref = this.storage.ref(filePath);
-    const task = ref.put(file);
-    task.snapshotChanges().pipe(
-      finalize( () => {
-        ref.getDownloadURL().subscribe(url => {
-          this.plantoesRef.update(key, {img: url, filePath: filePath })
-        })
-      })
-    ).subscribe();
-  }
-
-  removeImg(filePath: string, key:string, atualizarProduto: boolean = true){
-    const ref = this.storage.ref(filePath);
-    ref.delete();
-    if (atualizarProduto) {
-      this.plantoesRef.update(key, {img: '', filePath: ''});
-    }
-  }
 }

@@ -1,10 +1,10 @@
-<h3>Novo Produto</h3>
+<h3>{{ title }}</h3>
 <hr>
 <form [formGroup]="formProduto" (ngSubmit)="onSubmit()">
 
     <div class="form-group">
               <label for="exampleFormControlSelect1">Dia</label>
-              <select class="form-control" id="exampleFormControlSelect1">
+              <select class="form-control" id="exampleFormControlSelect1" formControlName="dia">
                 <option value="">- Escolher -</option>
                 <option value="segunda">Segunda</option>
                 <option value="terca">Terça</option>
@@ -21,34 +21,34 @@
     </div>
   </div>
   <div class="form-group">
-      <label for="categoriaKey">Matéria</label>
+      <label for="materiaKey">Matéria</label>
       <select class="form-control" id="materiaKey" formControlName="materiaKey" (change)="setMateriaNome($event.target.selectedOptions)">
         <option value="">- Escolher -</option>
         <option *ngFor="let materia of materias | async" [value]="materia.key">{{ materia.nome}}</option>
       </select>
     </div>
-    <div *ngIf="categoriaKey.invalid && (categoriaKey.dirty || categoriaKey.touched)" class="alert alert-danger">
-        <div *ngIf="categoriaKey.errors?.required">
+    <div *ngIf="materiaKey.invalid && (materiaKey.dirty || materiaKey.touched)" class="alert alert-danger">
+        <div *ngIf="materiaKey.errors?.required">
           A matéria é obrigatória.
         </div>
       </div>
   <div class="form-group">
     <label for="descricao">Hora inicio</label>
-         <input type="time" id="inputMDEx1" class="form-control">
+         <input type="time" id="inputMDEx1" class="form-control" formControlName="hora_inicio">
       </div>
   <div class="form-group">
       <label for="descricao">Hora fim</label>
-            <input type="time" id="inputMDEx1" class="form-control">
+            <input type="time" id="inputMDEx1" class="form-control" formControlName="hora_fim">
         </div>
   <div class="form-group">
-      <label for="categoriaKey">Professor</label>
-      <select class="form-control" id="categoriaKey" formControlName="categoriaKey" (change)="setMateriaNome($event.target.selectedOptions)">
+      <label for="professorKey">Professor</label>
+      <select class="form-control" id="professorKey" formControlName="professorKey" (change)="setProfessorNome($event.target.selectedOptions)">
         <option value="">- Escolher -</option>
         <option *ngFor="let materia of materias | async" [value]="materia.key">{{ materia.nome}}</option>
       </select>
     </div>
-    <div *ngIf="categoriaKey.invalid && (categoriaKey.dirty || categoriaKey.touched)" class="alert alert-danger">
-        <div *ngIf="categoriaKey.errors?.required">
+    <div *ngIf="professorKey.invalid && (professorKey.dirty || professorKey.touched)" class="alert alert-danger">
+        <div *ngIf="professorKey.errors?.required">
           O professor é obrigatório.
         </div>
       </div>

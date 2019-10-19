@@ -12,13 +12,24 @@ export class UsuarioService {
 
   constructor(private afAuth: AngularFireAuth, private db: AngularFireDatabase, private storage: AngularFireStorage) { }
 
+  private PATH = 'usuarios/';
+
   criarConta(usuario: any) {
     return new Promise((resolve, reject) => {
       this.afAuth.auth.createUserWithEmailAndPassword(usuario.email, usuario.senha)
         .then((userCredential: firebase.auth.UserCredential) => {
           userCredential.user.updateProfile({ displayName: usuario.nome, photoURL: '' });
           userCredential.user.sendEmailVerification();
-          this.logout();
+          const path = `${this.PATH}${this.afAuth.auth.currentUser.uid}`;
+
+          if (usuario.tipo=="aluno"){
+            this.db.object(path).update({ nome: usuario.nome, email: usuario.email, tipo:usuario.tipo, atributo:usuario.turma})
+          } else if (usuario.tipo=="professor"){
+            this.db.object(path).update({ nome: usuario.nome, email: usuario.email, tipo:usuario.tipo, atributo:usuario.materia})
+          } else {
+            this.db.object(path).update({ nome: usuario.nome, email: usuario.email, tipo:usuario.tipo})
+          }
+        // this.logout();
           resolve();
         })
         .catch((error: any) => {

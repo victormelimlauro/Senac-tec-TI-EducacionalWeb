@@ -18,13 +18,14 @@ import { CriarContaComponent } from './usuarios/criar-conta/criar-conta.componen
 import { EsqueciSenhaComponent } from './usuarios/esqueci-senha/esqueci-senha.component';
 import { LoginLayoutComponent } from './layout/login-layout/login-layout.component';
 import { DashboardComponent } from './core/dashboard/dashboard.component';
+import { AngularFireAuth } from '@angular/fire/auth';
 
 
 const routes: Routes = [
  {
   path: '',
   component: HomeLayoutComponent,
-  canActivate: [],
+  canActivate: [AuthGuard],
   children:[
     { path: 'dashboard', component: DashboardComponent },
     { path: 'criar-conta', component:  CriarContaComponent},

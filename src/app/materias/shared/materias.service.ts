@@ -45,6 +45,17 @@ materiasRef: AngularFireList<any>;
     )
   }
 
+  gettipoProfessor(tipo: string = 'Professor') {
+    // return this.db.list(FirebasePath.USARIOS, q => {
+    //     return q.orderByChild('Professor').equalTo(Professor);
+    // }).snapshotChanges().pipe(
+    //   map(changes => {
+    //     return changes.map(m => ({key: m.payload.key, ...m.payload.val() }));
+    //   })
+    // )
+  }
+
+
   getByKey(key: string) {
     const path = 'materias/'+key;
     return this.db.object(path).snapshotChanges().pipe(
