@@ -23,9 +23,9 @@ export class UsuarioService {
           const path = `${this.PATH}${this.afAuth.auth.currentUser.uid}`;
 
           if (usuario.tipo=="aluno"){
-            this.db.object(path).update({ nome: usuario.nome, email: usuario.email, tipo:usuario.tipo, atributo:usuario.turma})
+            this.db.object(path).update({ nome: usuario.nome, email: usuario.email, tipo:usuario.tipo, atributoKey:usuario.turma, atributoNome: usuario.turmaNome})
           } else if (usuario.tipo=="professor"){
-            this.db.object(path).update({ nome: usuario.nome, email: usuario.email, tipo:usuario.tipo, atributo:usuario.materia})
+            this.db.object(path).update({ nome: usuario.nome, email: usuario.email, tipo: usuario.tipo, atributoKey: usuario.materia, atributoNome: usuario.materiaNome})
           } else {
             this.db.object(path).update({ nome: usuario.nome, email: usuario.email, tipo:usuario.tipo})
           }

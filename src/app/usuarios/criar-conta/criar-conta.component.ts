@@ -39,8 +39,12 @@ export class CriarContaComponent implements OnInit {
   get email() { return this.formCriarConta.get('email'); }
   get senha() { return this.formCriarConta.get('senha'); }
   get tipo() { return this.formCriarConta.get('tipo'); }
-  get atributo() { return this.formCriarConta.get('atributo'); }
-  get turma() { return this.formCriarConta.get('truma'); }
+  // get atributo() { return this.formCriarConta.get('atributo'); }
+  get turma() { return this.formCriarConta.get('turma'); }
+  get turmaNome() { return this.formCriarConta.get('turmaNome'); }
+  get materia() { return this.formCriarConta.get('materia'); }
+  get materiaNome() { return this.formCriarConta.get('materiaNome'); }
+
 
   criarFormulario() {
     this.formCriarConta = this.formBuilder.group({
@@ -49,12 +53,14 @@ export class CriarContaComponent implements OnInit {
       senha: ['', Validators.required],
       tipo: [''],
       materia: [''],
+      materiaNome: [''],
       turma: [''],
+      turmaNome:[''],
     });
   }
 
   setTipo(tipo: any){
-    console.log(tipo)
+    console.log(tipo[0].text)
     if (tipo[0].text == "Aluno") {
       this.aluno=true;
       this.professor=false;
@@ -73,15 +79,16 @@ export class CriarContaComponent implements OnInit {
   }
 
   setTurmaNome(turmas: any) {
-    if (turmas && this.CriarConta.value.turmaKey) {
+    if (turmas) {
       const turmaNome = turmas[0].text;
       this.turmaNome.setValue(turmaNome);
     } else {
       this.turmaNome.setValue('');
     }
   }
+
   setMateriaNome(materias: any) {
-    if (this.materias && this.CriarConta.value.materiaKey) {
+    if (materias) {
       const materiaNome = materias[0].text;
       this.materiaNome.setValue(materiaNome);
     } else {
