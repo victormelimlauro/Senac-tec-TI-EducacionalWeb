@@ -2,7 +2,7 @@
 <hr>
 <div class="card">
   <div class="card-header text-right">
-    <a class="btn btn-primary" role="button" [routerLink]="['/usuarios/novo']">Nova turma</a>
+    <a class="btn btn-primary" role="button" [routerLink]="['/usuarios/novo']">Novo usuario</a>
   </div>
   <div class="card-body">
     <table class="table grid">
@@ -15,14 +15,16 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let turma of turmas | async" >
-          <td>{{ turma.nome }}</td>
-          <td>{{ turma.descricao }}</td>
+        <tr *ngFor="let usuario of usuarios | async" >
+          <td>{{ usuario.nome }}</td>
+          <td>{{ usuario.email }}</td>
+          <td>{{ usuario.tipo }}</td>
+          <td>{{ usuario.atributoNome }}</td>
           <td class="edit">
-            <a class="btn btn-warning text-white" role="button" [routerLink]="['/turmas/editar', turma.key]"><i class="far fa-edit"></i>Editar</a>
+            <a class="btn btn-warning text-white" role="button" [routerLink]="['editar', usuario.key]"><i class="far fa-edit"></i>Editar</a>
           </td>
           <td class="delete">
-            <button class="btn btn-danger" (click)="remover(turma.key)"><i class="far fa-trash-alt"></i>Excluir</button>
+            <button class="btn btn-danger" (click)="remover(usuario.key)"><i class="far fa-trash-alt"></i>Excluir</button>
           </td>
         </tr>
       </tbody>

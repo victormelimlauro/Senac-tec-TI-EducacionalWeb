@@ -1,7 +1,7 @@
 import { FirebasePath } from './../../core/shared/firebase-path';
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
-import { AngularFireDatabase } from '@angular/fire/database';
+import { AngularFireDatabase, AngularFireList } from '@angular/fire/database';
 import { AngularFireStorage } from '@angular/fire/storage';
 import { map, finalize } from 'rxjs/operators';
 
@@ -9,11 +9,15 @@ import { map, finalize } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class UsuarioService {
+  usuariosRef: AngularFireList<any>;
+  constructor(private afAuth: AngularFireAuth,
+              private db: AngularFireDatabase,
+              private storage: AngularFireStorage) {
+               this.usuariosRef = this.db.list('usuarios/');
+               }
+ private PATH = 'usuarios/';
 
-  constructor(private afAuth: AngularFireAuth, private db: AngularFireDatabase, private storage: AngularFireStorage) { }
-
-  private PATH = 'usuarios/';
-
+  //Tela CADASTRAR - EDITAR USUARIOS
   criarConta(usuario: any) {
     return new Promise((resolve, reject) => {
       this.afAuth.auth.createUserWithEmailAndPassword(usuario.email, usuario.senha)
@@ -134,5 +138,30 @@ export class UsuarioService {
     ref.delete();
     this.db.object(path).update({ img: '', filePath: '' });
     this.afAuth.auth.currentUser.updateProfile({ displayName: this.afAuth.auth.currentUser.displayName, photoURL: null });
+  }
+
+
+  //Tela LISTAR - USUARIOS
+  getAll() {
+    return this.usuariosRef.snapshotChanges().pipe(
+      map(changes => {
+        return changes.map(m => ({key: m.payload.key, ...m.payload.val() }))
+      })
+    )
+  }
+  remove(key: string){
+    return new Promise((resolve, reject) => {
+     // this.db.list('produtos/', q => q.orderByChild('categoriaKey').equalTo(key))
+              return this.usuariosRef.remove(key);
+            })
+          }
+  getByKey(key: string) {
+    const path = 'usuarios/'+key;
+    return this.db.object(path).snapshotChanges().pipe(
+      map(change => {
+        return ({ key: change.key, ...change.payload.val() });
+      })
+    );
+
   }
 }

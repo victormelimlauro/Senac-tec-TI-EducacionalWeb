@@ -4,7 +4,7 @@ import { finalize } from 'rxjs/operators';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { UsuarioService } from '../shared/usuario.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { Observable, from } from 'rxjs';
 
@@ -21,10 +21,15 @@ export class CriarContaComponent implements OnInit {
   public aluno: boolean = false;
   public professor: boolean = false;
   public administrator: boolean = false;
+  key: string;
+
+
+
   constructor(
     private formBuilder: FormBuilder,
     private usuarioService: UsuarioService,
     private router: Router,
+    private route: ActivatedRoute,
     private toast: ToastrService,
     private turmasService: TurmasService,
     private materiasService: MateriasService ){ }
@@ -33,13 +38,65 @@ export class CriarContaComponent implements OnInit {
     this.criarFormulario();
     this.materias = this.materiasService.getAll();
     this.turmas = this.turmasService.getAll();
-  }
+
+    this.key = this.route.snapshot.paramMap.get('key'); // Pega key da rota
+    if (this.key) {
+       //Se não passar esta criando novo se passar edita registro
+      //Consulta com parametro - key
+      const usuarioSubscribe = this.usuarioService.getByKey(this.key)
+      //Suscribe escuta na tabela e verificcategoriasServicea se encontrou o valor
+        .subscribe((usuarios:any) => {
+          usuarioSubscribe.unsubscribe();
+          this.formCriarConta.setValue({nome:usuarios.nome,
+            email:usuarios.email,
+            tipo:usuarios.tipo,
+            senha:"",
+            materia:"",
+            materiaNome:"",
+            turma: "",
+            turmaNome: "",
+            atributo: "",
+            atributoNome: "",
+            });
+            if(usuarios.tipo == 'aluno') {
+              this.formCriarConta.setValue({
+                nome:usuarios.nome,
+                email:usuarios.email,
+                tipo:usuarios.tipo,
+                senha:"",
+                materia:"",
+                materiaNome:"",
+                turma:usuarios.atributoKey,
+                turmaNome:usuarios.atributoNome,
+                atributo: "",
+                atributoNome: "",
+                });
+              } else if(usuarios.tipo == 'professor') {
+                this.formCriarConta.setValue({
+                  nome:usuarios.nome,
+                  email:usuarios.email,
+                  tipo:usuarios.tipo,
+                  senha:"",
+                  materia:usuarios.atributoKey,
+                  materiaNome:usuarios.atributoNome,
+                  turma: "",
+                  turmaNome: "",
+                  atributo: "",
+                  atributoNome: "",
+                  });
+                }
+        });
+
+    }
+
+     }
 
   get nome() { return this.formCriarConta.get('nome'); }
   get email() { return this.formCriarConta.get('email'); }
   get senha() { return this.formCriarConta.get('senha'); }
   get tipo() { return this.formCriarConta.get('tipo'); }
-  // get atributo() { return this.formCriarConta.get('atributo'); }
+  get atributo() { return this.formCriarConta.get('atributo'); }
+  get atributoNome() { return this.formCriarConta.get('atributoNome'); }
   get turma() { return this.formCriarConta.get('turma'); }
   get turmaNome() { return this.formCriarConta.get('turmaNome'); }
   get materia() { return this.formCriarConta.get('materia'); }
@@ -56,6 +113,8 @@ export class CriarContaComponent implements OnInit {
       materiaNome: [''],
       turma: [''],
       turmaNome:[''],
+      atributo:[''],
+      atributoNome:[''],
     });
   }
 

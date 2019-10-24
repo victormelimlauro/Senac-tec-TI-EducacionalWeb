@@ -48,7 +48,7 @@ const routes: Routes = [
 
     { path: 'usuarios', component:  ListaUsuariosComponent},
     { path: 'usuarios/novo', component:  CriarContaComponent},
-    { path: 'usarios/editar/:key', component:  CriarContaComponent},
+    { path: 'usuarios/editar/:key', component:  CriarContaComponent},
 
     { path: '', redirectTo:  '/dashboard', pathMatch: 'full' }
     ]
