@@ -35,12 +35,16 @@ export class CriarContaComponent implements OnInit {
     private materiasService: MateriasService ){ }
 
   ngOnInit() {
-    this.criarFormulario();
+
     this.materias = this.materiasService.getAll();
     this.turmas = this.turmasService.getAll();
 
+    this.title= "Nova matéria";
+
     this.key = this.route.snapshot.paramMap.get('key'); // Pega key da rota
     if (this.key) {
+      this.criarFormulario2();
+      this.title= "Editar matéria";
        //Se não passar esta criando novo se passar edita registro
       //Consulta com parametro - key
       const usuarioSubscribe = this.usuarioService.getByKey(this.key)
@@ -50,7 +54,7 @@ export class CriarContaComponent implements OnInit {
           this.formCriarConta.setValue({nome:usuarios.nome,
             email:usuarios.email,
             tipo:usuarios.tipo,
-            senha:"",
+            // senha:"",
             materia:"",
             materiaNome:"",
             turma: "",
@@ -63,7 +67,7 @@ export class CriarContaComponent implements OnInit {
                 nome:usuarios.nome,
                 email:usuarios.email,
                 tipo:usuarios.tipo,
-                senha:"",
+                // senha:"",
                 materia:"",
                 materiaNome:"",
                 turma:usuarios.atributoKey,
@@ -76,7 +80,7 @@ export class CriarContaComponent implements OnInit {
                   nome:usuarios.nome,
                   email:usuarios.email,
                   tipo:usuarios.tipo,
-                  senha:"",
+                  // senha:"",
                   materia:usuarios.atributoKey,
                   materiaNome:usuarios.atributoNome,
                   turma: "",
@@ -87,6 +91,9 @@ export class CriarContaComponent implements OnInit {
                 }
         });
 
+    }
+    else {
+      this.criarFormulario();
     }
 
      }
@@ -108,6 +115,20 @@ export class CriarContaComponent implements OnInit {
       nome: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
       senha: ['', Validators.required],
+      tipo: [''],
+      materia: [''],
+      materiaNome: [''],
+      turma: [''],
+      turmaNome:[''],
+      atributo:[''],
+      atributoNome:[''],
+    });
+  }
+  criarFormulario2() {
+    this.formCriarConta = this.formBuilder.group({
+      nome: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
+      // senha: [''],
       tipo: [''],
       materia: [''],
       materiaNome: [''],
@@ -158,7 +179,9 @@ export class CriarContaComponent implements OnInit {
 
   onSubmit() {
     if (this.formCriarConta.valid) {
-      this.usuarioService.criarConta(this.formCriarConta.value)
+
+      if (this.key) {
+        this.usuarioService.updateProfile(this.formCriarConta.value)
         .then(() => {
           this.toast.success('Sua conta foi criada com sucesso.');
           // this.router.navigate(['/login']);
@@ -166,6 +189,18 @@ export class CriarContaComponent implements OnInit {
         .catch((mensagem: string) => {
           this.toast.error(mensagem);
         });
+      } else {
+        this.usuarioService.criarConta(this.formCriarConta.value)
+        .then(() => {
+          this.toast.success('Sua conta foi criada com sucesso.');
+          // this.router.navigate(['/login']);
+        })
+        .catch((mensagem: string) => {
+          this.toast.error(mensagem);
+        });
+      }
+
+
     }
   }
 }
