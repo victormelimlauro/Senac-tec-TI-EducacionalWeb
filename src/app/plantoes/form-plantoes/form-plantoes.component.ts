@@ -1,5 +1,4 @@
 import { UsuarioService } from './../../usuarios/shared/usuario.service';
-import { TurmasService } from './../../turmas/shared/turmas.service';
 import { MateriasService } from './../../materias/shared/materias.service';
 import { PlantoesService } from './../shared/plantoes.service';
 
@@ -15,29 +14,26 @@ import { Observable } from 'rxjs';
   styleUrls: ['./form-plantoes.component.css']
 })
 export class FormPlantoesComponent implements OnInit {
-  formProduto: FormGroup;
+  formPlantoes: FormGroup;
   key: string;
-  turmas: Observable<any[]>;
+  usuarios: Observable<any[]>;
   materias: Observable<any[]>;
-  private file: File = null;
-  imgUrl = '';
-  filePath = '';
   result: void;
   title: string;
 
     constructor(private formBuilder: FormBuilder,
                 private route: ActivatedRoute,
                 private plantoesService: PlantoesService,
-                private turmasService: TurmasService,
                 private materiasService: MateriasService,
+                private usuarioService: UsuarioService,
                 private toastr: ToastrService,
                 private router: Router
       ) { }
 
     ngOnInit() {
-      this.criarFormulario();
-      this.turmas = this.turmasService.getAll();
+      this.usuarios = this.usuarioService.getAll();
       this.materias = this.materiasService.getAll();
+      this.criarFormulario();
 
       this.key = this.route.snapshot.paramMap.get('key');
       if (this.key) {
@@ -45,7 +41,7 @@ export class FormPlantoesComponent implements OnInit {
           .subscribe((plantoes: any) => {
 
             subscribe.unsubscribe();
-            this.formProduto.setValue({
+            this.formPlantoes.setValue({
               dia: plantoes.dia,
               materiaKey: plantoes.materiaKey,
               materiaNome: plantoes.materiaNome,
@@ -59,30 +55,32 @@ export class FormPlantoesComponent implements OnInit {
           });
       }
 
-      this.title= "Nova matéria";
-      this.key = this.route.snapshot.paramMap.get('key');
-      if (this.key) {
-        this.title= "Editar matéria";
-        const materiasSubscribe = this.materiasService.getByKey(this.key)
-          .subscribe((materias:any) => {
+      // this.title= "Nova matéria";
+      // this.key = this.route.snapshot.paramMap.get('key');
+      // if (this.key) {
+      //   this.title= "Editar matéria";
+      //   const materiasSubscribe = this.materiasService.getByKey(this.key)
+      //     .subscribe((materias:any) => {
 
-            materiasSubscribe.unsubscribe();
-            // this.FormPlantoes.setValue({nome:materias.nome});
-          });
-      }
+      //       materiasSubscribe.unsubscribe();
+      //       this.FormPlantoes.setValue({nome:materias.nome});
+      //     });
+      // }
     }
 
-    get nome() { return this.formProduto.get('nome'); }
-    get descricao() { return this.formProduto.get('descricao'); }
-    get preco() { return this.formProduto.get('preco'); }
-    get materiaKey() { return this.formProduto.get('materiaKey'); }
-    get materiaNome() { return this.formProduto.get('materiaNome'); }
-    get professorKey() { return this.formProduto.get('professorKey'); }
-    get professorNome() { return this.formProduto.get('professorNome'); }
+    get dia() { return this.formPlantoes.get('dia'); }
+    get sala() { return this.formPlantoes.get('sala'); }
+    get hora_inicio() { return this.formPlantoes.get('hora_inicio'); }
+    get hora_fim() { return this.formPlantoes.get('hora_fim'); }
+    get materiaKey() { return this.formPlantoes.get('materiaKey'); }
+    get materiaNome() { return this.formPlantoes.get('materiaNome'); }
+    get professorKey() { return this.formPlantoes.get('professorKey'); }
+    get professorNome() { return this.formPlantoes.get('professorNome'); }
 
     criarFormulario() {
       this.key = null;
-      this.formProduto = this.formBuilder.group({
+      this.formPlantoes = this.formBuilder.group({
+        dia: ['', Validators.required],
         materiaKey: ['', Validators.required],
         materiaNome: [''],
         hora_inicio: ['', Validators.required],
@@ -95,7 +93,7 @@ export class FormPlantoesComponent implements OnInit {
 
 
     setMateriaNome(materias: any) {
-      if (materias && this.formProduto.value.materiaKey) {
+      if (materias && this.formPlantoes.value.materiaKey) {
         const materiaNome = materias[0].text;
         this.materiaNome.setValue(materiaNome);
       } else {
@@ -104,7 +102,7 @@ export class FormPlantoesComponent implements OnInit {
     }
 
     setProfessorNome(professores: any) {
-      if (professores && this.formProduto.value.materiaKey) {
+      if (professores && this.formPlantoes.value.materiaKey) {
         const professorNome = professores[0].text;
         this.professorNome.setValue(professorNome);
       } else {
@@ -113,13 +111,13 @@ export class FormPlantoesComponent implements OnInit {
     }
 
     onSubmit() {
-      if (this.formProduto.valid) {
+      if (this.formPlantoes.valid) {
         let result: Promise<{}>;
 
         if (this.key) {
-          result = this.plantoesService.update(this.formProduto.value, this.key);
+          result = this.plantoesService.update(this.formPlantoes.value, this.key);
         } else {
-          result = this.plantoesService.insert(this.formProduto.value);
+          result = this.plantoesService.insert(this.formPlantoes.value);
         }
         this.criarFormulario();
 

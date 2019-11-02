@@ -103,15 +103,23 @@ export class UsuarioService {
     );
   }
 
-  updateProfile(values: any) {
-    return new Promise((resolve, reject) => {
-      this.afAuth.auth.currentUser.updateProfile({ displayName: values.nome, photoURL: this.afAuth.auth.currentUser.photoURL });
+  updateProfile(usuario: any, key: string) {
+      return new Promise((resolve, reject) => {
 
-      const path = `${FirebasePath.USUARIOS}${this.afAuth.auth.currentUser.uid}`
-      this.db.object(path).update({ telefone: values.telefone, cpf: values.cpf })
-        .then(() => resolve())
-        .catch(() => reject());
-    });
+            const path = `${this.PATH}${key}`;
+
+            if (usuario.tipo=="aluno"){
+              this.db.object(path).update({ nome: usuario.nome, email: usuario.email, tipo:usuario.tipo, atributoKey:usuario.turma, atributoNome: usuario.turmaNome})
+            } else if (usuario.tipo=="professor"){
+              this.db.object(path).update({ nome: usuario.nome, email: usuario.email, tipo: usuario.tipo, atributoKey: usuario.materia, atributoNome: usuario.materiaNome})
+            } else {
+              this.db.object(path).update({ nome: usuario.nome, email: usuario.email, tipo:usuario.tipo})
+            }
+            resolve();
+          // .catch((error: any) => {
+          //   reject(this.handlerError(error));
+          // });
+      });
   }
 
   uploadImg(file: File) {

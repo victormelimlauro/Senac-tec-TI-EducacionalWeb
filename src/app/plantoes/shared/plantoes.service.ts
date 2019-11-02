@@ -70,4 +70,17 @@ export class PlantoesService {
     this.plantoesRef.remove(key);
   }
 
+
+  getAllAtributo(atributo: string) {
+    return this.db.list(FirebasePath.PRODUTOS, q => {
+      if (atributo) {
+        return q.orderByChild('atributo').equalTo(atributo);
+      }
+    }).snapshotChanges().pipe(
+      map(changes => {
+        return changes.map(m => ({key: m.payload.key, ...m.payload.val() }));
+      })
+    )
+  }
+
 }

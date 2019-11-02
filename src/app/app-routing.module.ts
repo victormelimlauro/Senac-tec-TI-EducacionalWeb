@@ -35,7 +35,7 @@ const routes: Routes = [
     { path: 'plantoes/editar/:key', component:  FormPlantoesComponent},
 
     { path: 'plantoes/visitas', component:  ListaVisitasComponent},
-    { path: 'plantoes/visitas/novo', component:  FormVisitasComponent},
+    { path: 'plantoes/visitas/nova', component:  FormVisitasComponent},
     { path: 'plantoes/visitas/editar/:key', component:  FormVisitasComponent},
 
     { path: 'materias', component:  ListaMateriasComponent},

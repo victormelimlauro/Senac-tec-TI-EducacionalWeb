@@ -23,14 +23,14 @@ materiasRef: AngularFireList<any>;
   update(materias: any, key: string) {
     let updateObj = {}
     const path = 'materias/'+key;
-    const pathp = 'usuarios-materias/';
+    const pathp = 'usuarios/';
     updateObj[path] = materias;
 
-    const subscribe = this.getProdutosByMateria(key).subscribe(produtos => {
+    const subscribe = this.getProdutosByMateria(key).subscribe(usuarios => {
       subscribe.unsubscribe();
 
-      produtos.forEach(produto => {
-        updateObj[`${pathp}${produto.key}/materiaNome`] = materias.nome;
+      usuarios.forEach(atributo => {
+        updateObj[`${pathp}${atributo.key}/atributoNome`] = materias.nome;
       });
 
       this.db.object('/').update(updateObj);

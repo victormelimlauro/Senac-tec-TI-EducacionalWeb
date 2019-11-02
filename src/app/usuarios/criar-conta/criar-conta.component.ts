@@ -22,6 +22,7 @@ export class CriarContaComponent implements OnInit {
   public professor: boolean = false;
   public administrator: boolean = false;
   key: string;
+  title: string;
 
 
 
@@ -43,8 +44,9 @@ export class CriarContaComponent implements OnInit {
 
     this.key = this.route.snapshot.paramMap.get('key'); // Pega key da rota
     if (this.key) {
-      this.criarFormulario2();
-      this.title= "Editar matéria";
+           this.title= "Editar matéria";
+           this.criarFormulario2();
+
        //Se não passar esta criando novo se passar edita registro
       //Consulta com parametro - key
       const usuarioSubscribe = this.usuarioService.getByKey(this.key)
@@ -54,7 +56,7 @@ export class CriarContaComponent implements OnInit {
           this.formCriarConta.setValue({nome:usuarios.nome,
             email:usuarios.email,
             tipo:usuarios.tipo,
-            // senha:"",
+             senha:"",
             materia:"",
             materiaNome:"",
             turma: "",
@@ -67,7 +69,7 @@ export class CriarContaComponent implements OnInit {
                 nome:usuarios.nome,
                 email:usuarios.email,
                 tipo:usuarios.tipo,
-                // senha:"",
+                senha:"",
                 materia:"",
                 materiaNome:"",
                 turma:usuarios.atributoKey,
@@ -80,7 +82,7 @@ export class CriarContaComponent implements OnInit {
                   nome:usuarios.nome,
                   email:usuarios.email,
                   tipo:usuarios.tipo,
-                  // senha:"",
+                  senha:"",
                   materia:usuarios.atributoKey,
                   materiaNome:usuarios.atributoNome,
                   turma: "",
@@ -128,7 +130,7 @@ export class CriarContaComponent implements OnInit {
     this.formCriarConta = this.formBuilder.group({
       nome: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
-      // senha: [''],
+      senha: [''],
       tipo: [''],
       materia: [''],
       materiaNome: [''],
@@ -181,7 +183,7 @@ export class CriarContaComponent implements OnInit {
     if (this.formCriarConta.valid) {
 
       if (this.key) {
-        this.usuarioService.updateProfile(this.formCriarConta.value)
+        this.usuarioService.updateProfile(this.formCriarConta.value, this.key)
         .then(() => {
           this.toast.success('Sua conta foi criada com sucesso.');
           // this.router.navigate(['/login']);

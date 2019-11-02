@@ -1,3 +1,57 @@
-<p>
-  form-visitas works!
-</p>
+<h3>{{ title }}</h3>
+<hr>
+<form [formGroup]="formVisitas" (ngSubmit)="onSubmit()">
+
+  <div class="form-group">
+    <label for="nome">Nome do aluno</label>
+    <input type="text" class="form-control" id="nome" placeholder="Nome" formControlName="nome_aluno">
+  </div>
+  <div *ngIf="nome_aluno.invalid && (nome_aluno.dirty || nome_aluno.touched)" class="alert alert-danger">
+    <div *ngIf="nome_aluno.errors?.required">
+      O nome é obrigatório.
+    </div>
+  </div>
+  <div class="form-group row">
+      <label for="example-date-input" class="col-2 col-form-label">Data</label>
+      <div class="col-10">
+        <input class="form-control" type="date" value="" id="example-date-input"  formControlName="dia">
+      </div>
+    </div>
+    <div class="form-group">
+        <label for="materiaKey">Matéria</label>
+        <select class="form-control" id="materiaKey" formControlName="materiaKey" (change)="setMateriaNome($event.target.selectedOptions)">
+          <option value="">- Escolher -</option>
+          <option *ngFor="let materia of materias | async" [value]="materia.key">{{ materia.nome}}</option>
+        </select>
+      </div>
+      <div *ngIf="materiaKey.invalid && (materiaKey.dirty || materiaKey.touched)" class="alert alert-danger">
+          <div *ngIf="materiaKey.errors?.required">
+            A matéria é obrigatória.
+          </div>
+        </div>
+    <div class="form-group">
+      <label for="descricao">Hora inicio</label>
+           <input type="time" id="inputMDEx1" class="form-control" formControlName="hora_entrada">
+        </div>
+    <div class="form-group">
+        <label for="descricao">Hora fim</label>
+              <input type="time" id="inputMDEx1" class="form-control" formControlName="hora_saida">
+          </div>
+    <div class="form-group">
+        <label for="professorKey">Professor</label>
+        <select class="form-control" id="professorKey" formControlName="professorKey" (change)="setProfessorNome($event.target.selectedOptions)">
+          <option value="">- Escolher -</option>
+          <option *ngFor="let usuario of usuarios | async" [value]="usuario.key">{{ usuario.nome}}</option>
+        </select>
+      </div>
+      <div *ngIf="professorKey.invalid && (professorKey.dirty || professorKey.touched)" class="alert alert-danger">
+          <div *ngIf="professorKey.errors?.required">
+            O professor é obrigatório.
+          </div>
+        </div>
+
+
+  <button type="submit" class="btn btn-primary">Salvar</button>
+  <a class="btn btn-secondary ml-2" [routerLink]="['/produtos']">Voltar</a>
+
+</form>
