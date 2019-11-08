@@ -14,13 +14,13 @@ export class PlantoesService {
    }
 
   insert(plantao: any) {
-    // return this.plantoesRef.push(plantao);
-    return this.save(plantao, null);
+    return this.plantoesRef.push(plantao);
+   // return this.save(plantao, null);
   }
 
   update(plantao: any, key: string) {
-    // return this.plantoesRef.update(key, plantao);
-    return this.save(plantao, key);
+    return this.plantoesRef.update(key, plantao);
+   // return this.save(plantao, key);
   }
 
   private save(plantao: any, key: string) {
@@ -66,21 +66,22 @@ export class PlantoesService {
   }
 
 
-  remove(key: string, filePath: string) {
-    this.plantoesRef.remove(key);
+  remove(key: string) {
+    return this.plantoesRef.remove(key);
   }
 
 
-  getAllAtributo(atributo: string) {
-    return this.db.list(FirebasePath.PRODUTOS, q => {
-      if (atributo) {
-        return q.orderByChild('atributo').equalTo(atributo);
-      }
-    }).snapshotChanges().pipe(
-      map(changes => {
-        return changes.map(m => ({key: m.payload.key, ...m.payload.val() }));
-      })
-    )
-  }
+
+  // getAllAtributo(atributo: string) {
+  //   return this.db.list(FirebasePath.PRODUTOS, q => {
+  //     if (atributo) {
+  //       return q.orderByChild('atributo').equalTo(atributo);
+  //     }
+  //   }).snapshotChanges().pipe(
+  //     map(changes => {
+  //       return changes.map(m => ({key: m.payload.key, ...m.payload.val() }));
+  //     })
+  //   )
+  // }
 
 }

@@ -119,12 +119,12 @@ export class FormVisitasComponent implements OnInit {
 
     onSubmit() {
       if (this.formVisitas.valid) {
-        let result: Promise<{}>;
+      //  let result: Promise<{}>;
 
         if (this.key) {
-          result = this.plantoesService.update(this.formVisitas.value, this.key);
+          this.plantoesService.update(this.formVisitas.value, this.key);
         } else {
-          result = this.plantoesService.insert(this.formVisitas.value);
+          this.plantoesService.insert(this.formVisitas.value);
         }
         this.criarFormulario();
 

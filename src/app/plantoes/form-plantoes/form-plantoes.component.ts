@@ -112,12 +112,11 @@ export class FormPlantoesComponent implements OnInit {
 
     onSubmit() {
       if (this.formPlantoes.valid) {
-        let result: Promise<{}>;
 
         if (this.key) {
-          result = this.plantoesService.update(this.formPlantoes.value, this.key);
+          this.plantoesService.update(this.formPlantoes.value, this.key);
         } else {
-          result = this.plantoesService.insert(this.formPlantoes.value);
+          this.plantoesService.insert(this.formPlantoes.value);
         }
         this.criarFormulario();
 

@@ -23,6 +23,7 @@ export class CriarContaComponent implements OnInit {
   public administrator: boolean = false;
   key: string;
   title: string;
+  tipo_usr: string;
 
 
 
@@ -64,6 +65,7 @@ export class CriarContaComponent implements OnInit {
             atributo: "",
             atributoNome: "",
             });
+
             if(usuarios.tipo == 'aluno') {
               this.formCriarConta.setValue({
                 nome:usuarios.nome,
@@ -77,6 +79,9 @@ export class CriarContaComponent implements OnInit {
                 atributo: "",
                 atributoNome: "",
                 });
+                this.tipo_usr = usuarios.tipo;
+                this.setTipo(this.tipo_usr);
+
               } else if(usuarios.tipo == 'professor') {
                 this.formCriarConta.setValue({
                   nome:usuarios.nome,
@@ -90,6 +95,8 @@ export class CriarContaComponent implements OnInit {
                   atributo: "",
                   atributoNome: "",
                   });
+                  this.tipo_usr = usuarios.tipo;
+                  this.setTipo(this.tipo_usr);
                 }
         });
 
@@ -98,6 +105,7 @@ export class CriarContaComponent implements OnInit {
       this.criarFormulario();
     }
 
+    //  this.setTipo(this.tipo_usr);
      }
 
   get nome() { return this.formCriarConta.get('nome'); }
@@ -142,11 +150,11 @@ export class CriarContaComponent implements OnInit {
   }
 
   setTipo(tipo: any){
-    console.log(tipo[0].text)
-    if (tipo[0].text == "Aluno") {
+    console.log(tipo[0].text);
+    if (tipo[0].text == "Aluno" ||  tipo == "aluno" ) {
       this.aluno=true;
       this.professor=false;
-  } else if (tipo[0].text == "Professor") {
+  } else if (tipo[0].text == "Professor" ||  tipo == "professor" ) {
       this.professor=true;
       this.aluno=false;
     }
@@ -158,6 +166,13 @@ export class CriarContaComponent implements OnInit {
      this.professor=false;
      this.aluno=false;
     }
+  //   if (tipo == "Aluno" || tipo[0].text == "aluno") {
+  //     this.aluno=true;
+  //     this.professor=false;
+  // } else if (tipo == "Professor") {
+  //     this.professor=true;
+  //     this.aluno=false;
+  //   }
   }
 
   setTurmaNome(turmas: any) {
@@ -185,7 +200,7 @@ export class CriarContaComponent implements OnInit {
       if (this.key) {
         this.usuarioService.updateProfile(this.formCriarConta.value, this.key)
         .then(() => {
-          this.toast.success('Sua conta foi criada com sucesso.');
+          this.toast.success('Sua conta foi alterada com sucesso.');
           // this.router.navigate(['/login']);
         })
         .catch((mensagem: string) => {

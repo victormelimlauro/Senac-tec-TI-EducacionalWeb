@@ -14,12 +14,18 @@
             <th scope="col">Hora Fim</th>
             <th scope="col">Professor</th>
             <th scope="col">Sala</th>
+            <th scope="col"></th>
+            <th scope="col"></th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let plantao of plantoes | async" >
-          <td>{{ plantao.nome }}</td>
-          <td>{{ plantao.descricao }}</td>
+          <td>{{ plantao.dia }}</td>
+          <td>{{ plantao.materiaNome}}</td>
+          <td>{{ plantao.hora_inicio }}</td>
+          <td>{{ plantao.hora_fim }}</td>
+          <td>{{ plantao.professorNome }}</td>
+          <td>{{ plantao.sala }}</td>
           <td class="edit">
             <a class="btn btn-warning text-white" role="button" [routerLink]="['/plantoes/editar', plantao.key]"><i class="far fa-edit"></i>Editar</a>
           </td>
