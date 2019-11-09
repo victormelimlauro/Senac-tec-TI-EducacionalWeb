@@ -21,8 +21,10 @@ export class CriarContaComponent implements OnInit {
   public aluno: boolean = false;
   public professor: boolean = false;
   public administrator: boolean = false;
+  public novo_usr: boolean = true;
   key: string;
   title: string;
+  botao_submit: string;
   tipo_usr: string;
 
 
@@ -41,11 +43,14 @@ export class CriarContaComponent implements OnInit {
     this.materias = this.materiasService.getAll();
     this.turmas = this.turmasService.getAll();
 
-    this.title= "Nova matéria";
+    this.title= "Criar conta";
+    this.botao_submit="Criar conta"
 
     this.key = this.route.snapshot.paramMap.get('key'); // Pega key da rota
     if (this.key) {
-           this.title= "Editar matéria";
+           this.novo_usr = false;
+           this.title= "Editar conta";
+           this.botao_submit="Editar conta"
            this.criarFormulario2();
 
        //Se não passar esta criando novo se passar edita registro
