@@ -1,3 +1,4 @@
+import { VisitasService } from './../shared/visitas.service';
 import { UsuarioService } from './../../../usuarios/shared/usuario.service';
 import { MateriasService } from './../../../materias/shared/materias.service';
 import { PlantoesService } from './../../shared/plantoes.service';
@@ -10,21 +11,25 @@ import { Observable } from 'rxjs';
 
 
 @Component({
-  selector: 'app-form-plantoes',
+  selector: 'app-form-visitas',
   templateUrl: './form-visitas.component.html',
   styleUrls: ['./form-visitas.component.css']
 })
 export class FormVisitasComponent implements OnInit {
+  [x: string]: any;
   formVisitas: FormGroup;
   key: string;
   usuarios: Observable<any[]>;
+  professores: Observable<any[]>;
   materias: Observable<any[]>;
+  visitas: Observable<any[]>;
   result: void;
   title: string;
 
     constructor(private formBuilder: FormBuilder,
                 private route: ActivatedRoute,
                 private plantoesService: PlantoesService,
+                private visitasService: VisitasService,
                 private materiasService: MateriasService,
                 private usuarioService: UsuarioService,
                 private toastr: ToastrService,
@@ -32,30 +37,30 @@ export class FormVisitasComponent implements OnInit {
       ) { }
 
     ngOnInit() {
-      this.usuarios = this.usuarioService.getAll();
+      this.professores = this.usuarioService.getAll();
       this.materias = this.materiasService.getAll();
       this.criarFormulario();
 
       this.key = this.route.snapshot.paramMap.get('key');
       if (this.key) {
-        const subscribe = this.plantoesService.getByKey(this.key)
-          .subscribe((plantoes: any) => {
+        // const subscribe = this.visitasService.getByKey(this.key)
+        //   .subscribe((visitas: any) => {
 
-            subscribe.unsubscribe();
-            this.formVisitas.setValue({
-              nome_aluno: plantoes.nome_aluno,
-              dia: plantoes.dia,
-              sala: plantoes.sala,
-              materiaKey: plantoes.materiaKey,
-              materiaNome: plantoes.materiaNome,
-              hora_entrada: plantoes.hora_entrada,
-              hora_saida: plantoes.hora_saida,
-              professorKey: plantoes.professorKey,
-              professorNome: plantoes.professorNome,
+        //     subscribe.unsubscribe();
+        //     this.formVisitas.setValue({
+        //       nome_aluno: visitas.nome_aluno,
+        //       dia: visitas.dia,
+        //       sala: visitas.sala,
+        //       materiaKey: visitas.materiaKey,
+        //       materiaNome: visitas.materiaNome,
+        //       hora_entrada: visitas.hora_entrada,
+        //       hora_saida: visitas.hora_saida,
+        //       professorKey: visitas.professorKey,
+        //       professorNome: visitas.professorNome,
 
-            });
+        //     });
 
-          });
+        //   });
       }
 
       // this.title= "Nova matéria";
@@ -85,7 +90,7 @@ export class FormVisitasComponent implements OnInit {
     criarFormulario() {
       this.key = null;
       this.formVisitas = this.formBuilder.group({
-        nome_aluno: ['', Validators.required],
+        nome_aluno: [''],
         dia: ['', Validators.required],
         sala: [''],
         materiaKey: ['', Validators.required],
@@ -117,6 +122,10 @@ export class FormVisitasComponent implements OnInit {
       }
     }
 
+    getAluno(nome_aluno: string){
+      this.visitas = this.visitasService.getByAluno(nome_aluno);
+    }
+
     onSubmit() {
       if (this.formVisitas.valid) {
       //  let result: Promise<{}>;
@@ -128,7 +137,7 @@ export class FormVisitasComponent implements OnInit {
         }
         this.criarFormulario();
 
-        this.router.navigate(['plantoes']);
+        this.router.navigate(['visitas']);
         this.toastr.success('Plantão salvo com sucesso!!!');
       }
     }

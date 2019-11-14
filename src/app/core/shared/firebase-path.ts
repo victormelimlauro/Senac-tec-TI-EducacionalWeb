@@ -1,3 +1,3 @@
 export class FirebasePath {
-  public static USUARIOS: string = 'usarios/'
+  public static USUARIOS: string = 'usuarios/';
 }
