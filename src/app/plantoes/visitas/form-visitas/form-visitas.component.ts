@@ -25,6 +25,7 @@ export class FormVisitasComponent implements OnInit {
   visitas: Observable<any[]>;
   result: void;
   title: string;
+  nome_aluno_busca: string;
 
     constructor(private formBuilder: FormBuilder,
                 private route: ActivatedRoute,
@@ -122,8 +123,8 @@ export class FormVisitasComponent implements OnInit {
       }
     }
 
-    getAluno(nome_aluno: string){
-      this.visitas = this.visitasService.getByAluno(nome_aluno);
+    getAluno(){
+      this.visitas = this.visitasService.getByAluno(this.nome_aluno_busca);
     }
 
     onSubmit() {

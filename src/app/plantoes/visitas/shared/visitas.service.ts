@@ -13,9 +13,9 @@ export class VisitasService {
   constructor(private db: AngularFireDatabase) { }
 
 
-  getByAluno(aluno: string): Observable<any[]>  {
+  getByAluno(aluno: string)  {
     // return this.db.list(FirebasePath.CLIENTES, q => q.orderByChild('name').equalTo(aluno))
-    return this.db.list(FirebasePath.USUARIOS, q => q.orderByChild('nome').startAt(aluno).endAt(aluno+"\uf88f"))
+    return this.db.list(FirebasePath.USUARIOS, q => q.orderByChild('nome').startAt(aluno).endAt(aluno+'\uf8ff'))
       .snapshotChanges().pipe(
         map(changes => {
           return changes.map(m => ({ key: m.payload.key, ...m.payload.val() }))
