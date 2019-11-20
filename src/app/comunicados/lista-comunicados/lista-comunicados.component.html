@@ -1,0 +1,33 @@
+<h3>Comunicados</h3>
+<hr>
+<div class="card">
+  <div class="card-header text-right">
+    <a class="btn btn-primary" role="button" [routerLink]="['/comunicados/novo']">Novo comunicado</a>
+  </div>
+  <div class="card-body">
+    <table class="table grid">
+      <thead>
+        <tr>
+          <th scope="col">Data</th>
+          <th scope="col">Turma</th>
+          <th scope="col">Título</th>
+          <th scope="col"></th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let comunicado of comunicados | async" >
+          <td>{{ comunicado.dia }}</td>
+          <td>{{ comunicado.turma }}</td>
+          <td>{{ comunicado.nome }}</td>
+          <td class="edit">
+            <a class="btn btn-warning text-white" role="button" [routerLink]="['/comunicados/editar', comunicado.key]"><i class="far fa-edit"></i>Editar</a>
+          </td>
+          <td class="delete">
+            <button class="btn btn-danger" (click)="remover(comunicado.key)"><i class="far fa-trash-alt"></i>Excluir</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

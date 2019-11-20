@@ -1,3 +1,5 @@
+import { FormComunicadosComponent } from './comunicados/form-comunicados/form-comunicados.component';
+import { ListaComunicadosComponent } from './comunicados/lista-comunicados/lista-comunicados.component';
 import { ListaUsuariosComponent } from './usuarios/lista-usuarios/lista-usuarios.component';
 import { AuthGuard } from './usuarios/shared/auth.guard';
 import { ListaVisitasComponent } from './plantoes/visitas/lista-visitas/lista-visitas.component';
@@ -50,7 +52,11 @@ const routes: Routes = [
     { path: 'usuarios/novo', component:  CriarContaComponent},
     { path: 'usuarios/editar/:key', component:  CriarContaComponent},
 
-    { path: '', redirectTo:  '/dashboard', pathMatch: 'full' }
+    { path: 'comunicados', component: ListaComunicadosComponent},
+    { path:  'comunicados/novo', component: FormComunicadosComponent},
+    { path: 'comunicados/editar/:key', component:FormComunicadosComponent},
+
+    { path: '', redirectTo:  '/dashboard', pathMatch: 'full' },
     ]
 },
 {

@@ -15,7 +15,7 @@ export class VisitasService {
 
   getByAluno(aluno: string)  {
     // return this.db.list(FirebasePath.CLIENTES, q => q.orderByChild('name').equalTo(aluno))
-    return this.db.list(FirebasePath.USUARIOS, q => q.orderByChild('nome').startAt(aluno).endAt(aluno+'\uf8ff'))
+    return this.db.list(FirebasePath.USUARIOS, q => q.orderByChild('nome').startAt(aluno).endAt(aluno+'\uf88f'))
       .snapshotChanges().pipe(
         map(changes => {
           return changes.map(m => ({ key: m.payload.key, ...m.payload.val() }))

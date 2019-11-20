@@ -12,8 +12,8 @@ export class ListaUsuariosComponent implements OnInit {
   usuarios: Observable<any[]>;
 
   constructor(private usuariosService: UsuarioService,
-              private toastr: ToastrService) {
-   }
+              private toastr: ToastrService
+              ) { }
 
   ngOnInit() {
     this.usuarios = this.usuariosService.getAll();

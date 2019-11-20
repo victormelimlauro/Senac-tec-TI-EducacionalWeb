@@ -41,6 +41,8 @@ import { ListaTurmasComponent } from './turmas/lista-turmas/lista-turmas.compone
 import { FormVisitasComponent } from './plantoes/visitas/form-visitas/form-visitas.component';
 import { ListaVisitasComponent } from './plantoes/visitas/lista-visitas/lista-visitas.component';
 import { ListaUsuariosComponent } from './usuarios/lista-usuarios/lista-usuarios.component';
+import { FormComunicadosComponent } from './comunicados/form-comunicados/form-comunicados.component';
+import { ListaComunicadosComponent } from './comunicados/lista-comunicados/lista-comunicados.component';
 
 
 
@@ -63,7 +65,9 @@ import { ListaUsuariosComponent } from './usuarios/lista-usuarios/lista-usuarios
     ListaTurmasComponent,
     FormVisitasComponent,
     ListaVisitasComponent,
-    ListaUsuariosComponent
+    ListaUsuariosComponent,
+    FormComunicadosComponent,
+    ListaComunicadosComponent
   ],
   imports: [
     BrowserModule,
