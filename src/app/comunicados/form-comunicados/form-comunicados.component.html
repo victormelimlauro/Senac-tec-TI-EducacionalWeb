@@ -15,14 +15,18 @@
       <option *ngFor="let turma of turmas| async" [value]="turma.key">{{ turma.nome}}</option>
     </select>
   </div>
-  <div class="form-group">
-    <label for="nome">Título</label>
-    <input type="text" class="form-control" id="nome" placeholder="Nome" formControlName="nome">
-  </div>
   <div *ngIf="nome.invalid && (nome.dirty || nome.touched)" class="alert alert-danger">
     <div *ngIf="nome.errors?.required">
       O nome da turma é obrigatório.
     </div>
+  </div>
+  <div class="form-group">
+    <label for="nome">Título</label>
+    <input type="text" class="form-control" id="nome" placeholder="nome" formControlName="nome">
+  </div>
+  <div class="form-group">
+    <label for="nome">Conteúdo</label>
+    <input type="text" class="form-control" id="nome" placeholder="descricao" formControlName="descricao">
   </div>
 
 

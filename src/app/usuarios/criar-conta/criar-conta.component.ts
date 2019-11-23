@@ -44,7 +44,7 @@ export class CriarContaComponent implements OnInit {
     this.turmas = this.turmasService.getAll();
 
     this.title= "Criar conta";
-    this.botao_submit="Criar conta"
+    this.botao_submit="Criar conta";
 
     this.key = this.route.snapshot.paramMap.get('key'); // Pega key da rota
     if (this.key) {

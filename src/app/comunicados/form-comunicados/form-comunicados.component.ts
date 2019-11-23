@@ -33,10 +33,16 @@ export class FormComunicadosComponent implements OnInit {
       this.key = this.route.snapshot.paramMap.get('key');
       if (this.key) {
         this.title= "Editar turma";
-        const turmasSubscribe = this.comunicadosService.getByKey(this.key)
+        const comunicadosSubscribe = this.comunicadosService.getByKey(this.key)
           .subscribe((comunicados:any) => {
-
-            turmasSubscribe.unsubscribe();
+            this.formComunicados.setValue({
+              nome:comunicados.nome,
+              dia:comunicados.dia,
+              turmaKey:comunicados.turmaKey,
+              turmaNome:comunicados.turmaNome,
+              descricao:comunicados.descricao,
+              });
+            comunicadosSubscribe.unsubscribe();
             this.formComunicados.setValue({nome:comunicados.nome});
           });
       }
@@ -46,8 +52,8 @@ export class FormComunicadosComponent implements OnInit {
     get nome() { return this.formComunicados.get('nome'); }
     get dia() { return this.formComunicados.get('dia'); }
     get turmaKey() {return this.formComunicados.get('turmaKey'); }
-    get turmaNome() { return this.formComunicados.get('turNome'); }
-    // get descricao() { return this.formTurmas.get('descricao'); }
+    get turmaNome() { return this.formComunicados.get('turmaNome'); }
+    get descricao() { return this.formComunicados.get('descricao'); }
 
     criarFormulario() {
       this.key = null;
@@ -56,14 +62,14 @@ export class FormComunicadosComponent implements OnInit {
         dia: [''],
         turmaKey:[''],
         turmaNome: [''],
-        // descricao: [''],
+        descricao: [''],
       });
     }
 
     setTurmaNome(turmas: any) {
       if (turmas) {
-        const turmaNome = turmas[0].text;
-        this.turmaNome.setValue(turmaNome);
+        const turmaNome1 = turmas[0].text;
+        this.turmaNome.setValue(turmaNome1);
       } else {
         this.turmaNome.setValue('');
       }

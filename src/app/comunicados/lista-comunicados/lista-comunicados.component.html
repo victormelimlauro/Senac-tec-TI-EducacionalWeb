@@ -18,7 +18,7 @@
       <tbody>
         <tr *ngFor="let comunicado of comunicados | async" >
           <td>{{ comunicado.dia }}</td>
-          <td>{{ comunicado.turma }}</td>
+          <td>{{ comunicado.turmaNome }}</td>
           <td>{{ comunicado.nome }}</td>
           <td class="edit">
             <a class="btn btn-warning text-white" role="button" [routerLink]="['/comunicados/editar', comunicado.key]"><i class="far fa-edit"></i>Editar</a>

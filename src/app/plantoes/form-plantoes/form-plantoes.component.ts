@@ -34,9 +34,10 @@ export class FormPlantoesComponent implements OnInit {
       this.usuarios = this.usuarioService.getAll();
       this.materias = this.materiasService.getAll();
       this.criarFormulario();
-
+      this.title= "Nova matéria";
       this.key = this.route.snapshot.paramMap.get('key');
       if (this.key) {
+        this.title= "Editar matéria";
         const subscribe = this.plantoesService.getByKey(this.key)
           .subscribe((plantoes: any) => {
 

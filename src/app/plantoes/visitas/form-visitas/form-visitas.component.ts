@@ -38,12 +38,14 @@ export class FormVisitasComponent implements OnInit {
       ) { }
 
     ngOnInit() {
+      this.title= "Nova matéria";
       this.professores = this.usuarioService.getAll();
       this.materias = this.materiasService.getAll();
       this.criarFormulario();
 
       this.key = this.route.snapshot.paramMap.get('key');
       if (this.key) {
+        this.title= "Editar matéria";
         // const subscribe = this.visitasService.getByKey(this.key)
         //   .subscribe((visitas: any) => {
 

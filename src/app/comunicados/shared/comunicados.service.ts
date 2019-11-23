@@ -22,7 +22,7 @@ comunicadosRef: AngularFireList<any>;
 
   update(turmas: any, key: string) {
     let updateObj = {}
-    const path = 'turmas/'+key;
+    const path = 'comunicados/'+key;
     const pathp = 'usuarios-turmas/';
     updateObj[path] = turmas;
 
@@ -46,7 +46,7 @@ comunicadosRef: AngularFireList<any>;
   }
 
   getByKey(key: string) {
-    const path = 'turmas/'+key;
+    const path = 'comunicados/'+key;
     return this.db.object(path).snapshotChanges().pipe(
       map(change => {
         return ({ key: change.key, ...change.payload.val() });
