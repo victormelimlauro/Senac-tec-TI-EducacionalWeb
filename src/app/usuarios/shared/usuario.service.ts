@@ -23,7 +23,7 @@ export class UsuarioService {
       this.afAuth.auth.createUserWithEmailAndPassword(usuario.email, usuario.senha)
         .then((userCredential: firebase.auth.UserCredential) => {
           userCredential.user.updateProfile({ displayName: usuario.nome, photoURL: '' });
-         // userCredential.user.sendEmailVerification();
+         userCredential.user.sendEmailVerification();
           const path = `${this.PATH}${this.afAuth.auth.currentUser.uid}`;
 
           if (usuario.tipo=="aluno"){

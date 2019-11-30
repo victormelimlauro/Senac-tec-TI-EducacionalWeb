@@ -18,6 +18,7 @@ export class FormPlantoesComponent implements OnInit {
   key: string;
   usuarios: Observable<any[]>;
   materias: Observable<any[]>;
+  dias: Observable<any[]>;
   result: void;
   title: string;
 
@@ -44,6 +45,7 @@ export class FormPlantoesComponent implements OnInit {
             subscribe.unsubscribe();
             this.formPlantoes.setValue({
               dia: plantoes.dia,
+             // numeroDia: plantoes.numeroDia,
               materiaKey: plantoes.materiaKey,
               materiaNome: plantoes.materiaNome,
               hora_inicio: plantoes.hora_inicio,
@@ -70,6 +72,7 @@ export class FormPlantoesComponent implements OnInit {
     }
 
     get dia() { return this.formPlantoes.get('dia'); }
+    get numeroDia() { return this.formPlantoes.get('numeroDia'); }
     get sala() { return this.formPlantoes.get('sala'); }
     get hora_inicio() { return this.formPlantoes.get('hora_inicio'); }
     get hora_fim() { return this.formPlantoes.get('hora_fim'); }
@@ -82,6 +85,7 @@ export class FormPlantoesComponent implements OnInit {
       this.key = null;
       this.formPlantoes = this.formBuilder.group({
         dia: ['', Validators.required],
+        //numeroDia: [''],
         materiaKey: ['', Validators.required],
         materiaNome: [''],
         hora_inicio: ['', Validators.required],
@@ -92,6 +96,15 @@ export class FormPlantoesComponent implements OnInit {
       });
     }
 
+
+    setNumeroDia(dia: any) {
+      if(dia = "terca"){
+        //this.value.numeroDia = 2;
+         this.formPlantoes.patchValue({
+          numeroDia: this.numeroDia,
+        });
+      }
+    }
 
     setMateriaNome(materias: any) {
       if (materias && this.formPlantoes.value.materiaKey) {
@@ -112,8 +125,8 @@ export class FormPlantoesComponent implements OnInit {
     }
 
     onSubmit() {
+      this.setNumeroDia(this.dia);
       if (this.formPlantoes.valid) {
-
         if (this.key) {
           this.plantoesService.update(this.formPlantoes.value, this.key);
         } else {

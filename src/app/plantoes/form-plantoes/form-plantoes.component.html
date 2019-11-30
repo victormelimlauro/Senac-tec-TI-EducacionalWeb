@@ -4,7 +4,7 @@
 
     <div class="form-group">
               <label for="exampleFormControlSelect1">Dia</label>
-              <select class="form-control" id="exampleFormControlSelect1" formControlName="dia">
+              <select class="form-control" id="exampleFormControlSelect1" formControlName="dia" (change)="setNumeroDia($event.target.selectedOptions)">
                 <option value="">- Escolher -</option>
                 <option value="segunda">Segunda</option>
                 <option value="terca">Terça</option>
