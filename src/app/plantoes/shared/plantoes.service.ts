@@ -28,7 +28,7 @@ export class PlantoesService {
       const plantaoRef = {
         nome: plantao.nome,
         descricao: plantao.descricao,
-        preco: plantao.preco,
+     //   preco: plantao.preco,
         materiaKey: plantao.materiaKey,
         materiaNome: plantao.materiaNome,
         usuarioKey: plantao.usuarioKey,

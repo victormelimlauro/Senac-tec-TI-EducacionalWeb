@@ -45,7 +45,6 @@ export class FormPlantoesComponent implements OnInit {
             subscribe.unsubscribe();
             this.formPlantoes.setValue({
               dia: plantoes.dia,
-             // numeroDia: plantoes.numeroDia,
               materiaKey: plantoes.materiaKey,
               materiaNome: plantoes.materiaNome,
               hora_inicio: plantoes.hora_inicio,
@@ -99,10 +98,10 @@ export class FormPlantoesComponent implements OnInit {
 
     setNumeroDia(dia: any) {
       if(dia = "terca"){
-        //this.value.numeroDia = 2;
-         this.formPlantoes.patchValue({
-          numeroDia: this.numeroDia,
-        });
+        const numeroDia = 2;
+        this.numeroDia.setValue(numeroDia);
+      }  else {
+        this.numeroDia.setValue('');
       }
     }
 

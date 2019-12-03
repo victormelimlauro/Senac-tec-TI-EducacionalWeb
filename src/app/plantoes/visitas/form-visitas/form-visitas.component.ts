@@ -38,32 +38,33 @@ export class FormVisitasComponent implements OnInit {
       ) { }
 
     ngOnInit() {
-      this.title= "Nova matéria";
+      this.title= "Nova visita";
+      this.usuarios = this.usuarioService.getAll();
       this.professores = this.usuarioService.getAll();
       this.materias = this.materiasService.getAll();
       this.criarFormulario();
 
       this.key = this.route.snapshot.paramMap.get('key');
       if (this.key) {
-        this.title= "Editar matéria";
-        // const subscribe = this.visitasService.getByKey(this.key)
-        //   .subscribe((visitas: any) => {
+        this.title= "Editar visita";
+        const subscribe = this.visitasService.getByKey(this.key)
+          .subscribe((visitas: any) => {
+            subscribe.unsubscribe();
+            this.formVisitas.setValue({
+              nome_aluno: visitas.nome_aluno,
+              dia: visitas.dia,
+              sala: visitas.sala,
+              _aluno: visitas._aluno,
+              materiaKey: visitas.materiaKey,
+              materiaNome: visitas.materiaNome,
+              hora_entrada: visitas.hora_entrada,
+              hora_saida: visitas.hora_saida,
+              professorKey: visitas.professorKey,
+              professorNome: visitas.professorNome,
 
-        //     subscribe.unsubscribe();
-        //     this.formVisitas.setValue({
-        //       nome_aluno: visitas.nome_aluno,
-        //       dia: visitas.dia,
-        //       sala: visitas.sala,
-        //       materiaKey: visitas.materiaKey,
-        //       materiaNome: visitas.materiaNome,
-        //       hora_entrada: visitas.hora_entrada,
-        //       hora_saida: visitas.hora_saida,
-        //       professorKey: visitas.professorKey,
-        //       professorNome: visitas.professorNome,
+            });
 
-        //     });
-
-        //   });
+          });
       }
 
       // this.title= "Nova matéria";
@@ -82,6 +83,7 @@ export class FormVisitasComponent implements OnInit {
     get nome_aluno() {return this.formVisitas.get('nome_aluno');}
     get dia() { return this.formVisitas.get('dia'); }
     get sala() { return this.formVisitas.get('sala'); }
+    get _aluno() { return this.formVisitas.get('_aluno'); }
     get materiaKey() { return this.formVisitas.get('materiaKey'); }
     get materiaNome() { return this.formVisitas.get('materiaNome'); }
     get hora_entrada() { return this.formVisitas.get('hora_entrada'); }
@@ -96,6 +98,7 @@ export class FormVisitasComponent implements OnInit {
         nome_aluno: [''],
         dia: ['', Validators.required],
         sala: [''],
+        _aluno:[''],
         materiaKey: ['', Validators.required],
         materiaNome: [''],
         hora_entrada: ['', Validators.required],
@@ -126,7 +129,7 @@ export class FormVisitasComponent implements OnInit {
     }
 
     getAluno(){
-      this.visitas = this.visitasService.getByAluno(this.nome_aluno_busca);
+      this.usuarios = this.visitasService.getByAluno(this.nome_aluno_busca);
     }
 
     onSubmit() {
@@ -134,9 +137,9 @@ export class FormVisitasComponent implements OnInit {
       //  let result: Promise<{}>;
 
         if (this.key) {
-          this.plantoesService.update(this.formVisitas.value, this.key);
+          this.visitasService.update(this.formVisitas.value, this.key);
         } else {
-          this.plantoesService.insert(this.formVisitas.value);
+          this.visitasService.insert(this.formVisitas.value);
         }
         this.criarFormulario();
 
