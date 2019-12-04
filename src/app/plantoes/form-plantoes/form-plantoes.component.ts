@@ -45,6 +45,7 @@ export class FormPlantoesComponent implements OnInit {
             subscribe.unsubscribe();
             this.formPlantoes.setValue({
               dia: plantoes.dia,
+              numeroDia: null,
               materiaKey: plantoes.materiaKey,
               materiaNome: plantoes.materiaNome,
               hora_inicio: plantoes.hora_inicio,
@@ -68,6 +69,7 @@ export class FormPlantoesComponent implements OnInit {
       //       this.FormPlantoes.setValue({nome:materias.nome});
       //     });
       // }
+     // this.setNumeroDia(this.dia);
     }
 
     get dia() { return this.formPlantoes.get('dia'); }
@@ -84,7 +86,7 @@ export class FormPlantoesComponent implements OnInit {
       this.key = null;
       this.formPlantoes = this.formBuilder.group({
         dia: ['', Validators.required],
-        //numeroDia: [''],
+        numeroDia: [''],
         materiaKey: ['', Validators.required],
         materiaNome: [''],
         hora_inicio: ['', Validators.required],
@@ -97,11 +99,34 @@ export class FormPlantoesComponent implements OnInit {
 
 
     setNumeroDia(dia: any) {
-      if(dia = "terca"){
+      dia= dia.value;
+      if(dia == 'domingo'){
+        const numeroDia = 1;
+        this.numeroDia.setValue(numeroDia);
+      }
+      else if(dia === 'segunda'){
         const numeroDia = 2;
         this.numeroDia.setValue(numeroDia);
-      }  else {
-        this.numeroDia.setValue('');
+      }
+      else if(dia === 'terca'){
+        const numeroDia = 3;
+        this.numeroDia.setValue(numeroDia);
+      }
+      else if(dia === 'quarta'){
+        const numeroDia = 4;
+        this.numeroDia.setValue(numeroDia);
+      }
+      else if(dia === 'quinta'){
+        const numeroDia = 5;
+        this.numeroDia.setValue(numeroDia);
+      }
+      else if(dia === 'sexta'){
+        const numeroDia = 6;
+        this.numeroDia.setValue(numeroDia);
+      }
+      else if(dia === 'sabado'){
+        const numeroDia = 7;
+        this.numeroDia.setValue(numeroDia);
       }
     }
 
