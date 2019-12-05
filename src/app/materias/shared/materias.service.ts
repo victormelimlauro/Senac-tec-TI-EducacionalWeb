@@ -26,11 +26,22 @@ materiasRef: AngularFireList<any>;
     const pathp = 'usuarios/';
     updateObj[path] = materias;
 
-    const subscribe = this.getProdutosByMateria(key).subscribe(usuarios => {
+    const subscribe = this.getUsuariosByMateria(key).subscribe(usuarios => {
       subscribe.unsubscribe();
 
       usuarios.forEach(atributo => {
         updateObj[`${pathp}${atributo.key}/atributoNome`] = materias.nome;
+      });
+
+      this.db.object('/').update(updateObj);
+    });
+
+    const pathp1 = 'plantoes/';
+    const subscribe1 = this.getPlantoesByMateria(key).subscribe(plantoes => {
+      subscribe1.unsubscribe();
+
+      plantoes.forEach(materia => {
+        updateObj[`${pathp1}${materia.key}/materiaNome`] = materias.nome;
       });
 
       this.db.object('/').update(updateObj);
@@ -66,8 +77,8 @@ materiasRef: AngularFireList<any>;
 
   }
 
-  getProdutosByMateria(key: string) {
-    return this.db.list('produtos/', q => q.orderByChild('materiasKey').equalTo(key))
+  getUsuariosByMateria(key: string) {
+    return this.db.list('usuarios/', q => q.orderByChild('atributoKey').equalTo(key))
     .snapshotChanges()
     .pipe(
       map(changes => {
@@ -76,9 +87,18 @@ materiasRef: AngularFireList<any>;
     )
   }
 
+  getPlantoesByMateria(key: string) {
+    return this.db.list('plantoes/', q => q.orderByChild('materiaKey').equalTo(key))
+    .snapshotChanges()
+    .pipe(
+      map(changes => {
+        return changes.map(m => ({ key: m.key }))
+      })
+    )
+  }
   remove(key: string){
     return new Promise((resolve, reject) => {
-          const subscribe = this.getProdutosByMateria(key).subscribe((produtos: any) => {
+          const subscribe = this.getUsuariosByMateria(key).subscribe((produtos: any) => {
             subscribe.unsubscribe();
 
             if (produtos.length == 0) {

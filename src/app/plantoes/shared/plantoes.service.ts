@@ -1,3 +1,4 @@
+import { FirebasePath } from './../../core/shared/firebase-path';
 import { Injectable } from '@angular/core';
 import { AngularFireList, AngularFireDatabase } from '@angular/fire/database';
 import { map, finalize } from 'rxjs/operators';
@@ -11,6 +12,7 @@ export class PlantoesService {
 
   constructor(private db: AngularFireDatabase, private storage: AngularFireStorage) {
     this.plantoesRef = this.db.list('plantoes/');
+
    }
 
   insert(plantao: any) {
@@ -51,6 +53,20 @@ export class PlantoesService {
     return this.plantoesRef.snapshotChanges().pipe(
       map(changes => {
         return changes.map(m => ({key: m.payload.key, ...m.payload.val() }))
+      })
+    )
+  }
+
+  getProfessor(tipo: string = "professor") {
+    return this.db.list(FirebasePath.USUARIOS, q => {
+      if (tipo) {
+        return q.orderByChild('tipo').equalTo(tipo);
+      } else {
+        return q.orderByChild('diaNum');
+      }
+    }).snapshotChanges().pipe(
+      map(changes => {
+        return changes.map(m => ({key: m.payload.key, ...m.payload.val() }));
       })
     )
   }

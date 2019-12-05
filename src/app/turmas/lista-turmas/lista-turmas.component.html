@@ -11,12 +11,13 @@
           <th scope="col">Nome</th>
           <th scope="col"></th>
           <th scope="col"></th>
+
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let turma of turmas | async" >
           <td>{{ turma.nome }}</td>
-          <td>{{ turma.descricao }}</td>
+          <!-- <td>{{ turma.descricao }}</td> -->
           <td class="edit">
             <a class="btn btn-warning text-white" role="button" [routerLink]="['/turmas/editar', turma.key]"><i class="far fa-edit"></i>Editar</a>
           </td>

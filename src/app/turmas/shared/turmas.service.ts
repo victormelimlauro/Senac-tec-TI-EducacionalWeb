@@ -26,11 +26,22 @@ turmasRef: AngularFireList<any>;
     const pathp = 'comunicados/';
     updateObj[path] = turmas;
 
-    const subscribe = this.getProdutosByTurma(key).subscribe(comunicados => {
+    const subscribe = this.getComunicadosByTurma(key).subscribe(comunicados => {
       subscribe.unsubscribe();
 
       comunicados.forEach(comunicado => {
         updateObj[`${pathp}${comunicado.key}/turmaNome`] = turmas.nome;
+      });
+
+      this.db.object('/').update(updateObj);
+    });
+
+    const pathp1 = 'usuarios/';
+    const subscribe1 = this.getUsuariosByTurma(key).subscribe(usuarios => {
+      subscribe.unsubscribe();
+
+      usuarios.forEach(usuario => {
+        updateObj[`${pathp1}${usuario.key}/atributoNome`] = turmas.nome;
       });
 
       this.db.object('/').update(updateObj);
@@ -54,9 +65,38 @@ turmasRef: AngularFireList<any>;
     );
 
   }
+  getComunicadosByKey(key: string) {
+    const path = 'comunicados/'+key;
+    return this.db.object(path).snapshotChanges().pipe(
+      map(change => {
+        return ({ key: change.key, ...change.payload.val() });
+      })
+    );
+
+  }
+
+  getComunicadosByTurma(key: string) {
+    return this.db.list('comunicados/', q => q.orderByChild('turmaKey').equalTo(key))
+    .snapshotChanges()
+    .pipe(
+      map(changes => {
+        return changes.map(m => ({ key: m.key }))
+      })
+    )
+  }
 
   getProdutosByTurma(key: string) {
     return this.db.list('produtos/', q => q.orderByChild('turmasKey').equalTo(key))
+    .snapshotChanges()
+    .pipe(
+      map(changes => {
+        return changes.map(m => ({ key: m.key }))
+      })
+    )
+  }
+
+  getUsuariosByTurma(key: string) {
+    return this.db.list('usuarios/', q => q.orderByChild('atributoKey').equalTo(key))
     .snapshotChanges()
     .pipe(
       map(changes => {

@@ -221,7 +221,7 @@ export class CriarContaComponent implements OnInit {
           this.toast.error(mensagem);
         });
       }
-
+      this.router.navigate(['usuarios']);
 
     }
   }

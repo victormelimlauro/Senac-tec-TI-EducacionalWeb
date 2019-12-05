@@ -32,7 +32,7 @@ export class FormPlantoesComponent implements OnInit {
       ) { }
 
     ngOnInit() {
-      this.usuarios = this.usuarioService.getAll();
+      this.usuarios = this.plantoesService.getProfessor();
       this.materias = this.materiasService.getAll();
       this.criarFormulario();
       this.title= "Nova matéria";

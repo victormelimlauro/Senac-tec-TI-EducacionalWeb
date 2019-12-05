@@ -40,7 +40,7 @@ export class FormVisitasComponent implements OnInit {
     ngOnInit() {
       this.title= "Nova visita";
       this.usuarios = this.usuarioService.getAll();
-      this.professores = this.usuarioService.getAll();
+      this.usuarios = this.plantoesService.getProfessor();
       this.materias = this.materiasService.getAll();
       this.criarFormulario();
 
@@ -143,7 +143,7 @@ export class FormVisitasComponent implements OnInit {
         }
         this.criarFormulario();
 
-        this.router.navigate(['visitas']);
+        this.router.navigate(['plantoes/visitas']);
         this.toastr.success('Plantão salvo com sucesso!!!');
       }
     }
