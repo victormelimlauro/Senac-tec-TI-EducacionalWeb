@@ -103,6 +103,16 @@ export class UsuarioService {
     );
   }
 
+  getTipoDadosUsuario(email: string) {
+    return this.db.list(FirebasePath.USUARIOS, q => {
+         return q.orderByChild('email').equalTo(email);
+        }) .snapshotChanges().pipe(
+      map(changes => {
+        return changes.map(m => ({key: m.payload.key, ...m.payload.val() }));
+      })
+    )
+  }
+
   updateProfile(usuario: any, key: string) {
       return new Promise((resolve, reject) => {
 

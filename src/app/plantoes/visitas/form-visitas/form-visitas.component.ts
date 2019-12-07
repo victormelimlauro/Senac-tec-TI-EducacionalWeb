@@ -26,6 +26,8 @@ export class FormVisitasComponent implements OnInit {
   result: void;
   title: string;
   nome_aluno_busca: string;
+  keyAluno: string;
+  nomeAluno: string;
 
     constructor(private formBuilder: FormBuilder,
                 private route: ActivatedRoute,
@@ -39,8 +41,8 @@ export class FormVisitasComponent implements OnInit {
 
     ngOnInit() {
       this.title= "Nova visita";
-      this.usuarios = this.usuarioService.getAll();
-      this.usuarios = this.plantoesService.getProfessor();
+      this.usuarios = this.plantoesService.getAluno();
+      this.professores = this.plantoesService.getProfessor();
       this.materias = this.materiasService.getAll();
       this.criarFormulario();
 
@@ -54,7 +56,9 @@ export class FormVisitasComponent implements OnInit {
               nome_aluno: visitas.nome_aluno,
               dia: visitas.dia,
               sala: visitas.sala,
-              _aluno: visitas._aluno,
+              nomeAluno: visitas._aluno,
+              frmKeyAluno: null,
+              frmNomeAluno: null,
               materiaKey: visitas.materiaKey,
               materiaNome: visitas.materiaNome,
               hora_entrada: visitas.hora_entrada,
@@ -83,7 +87,9 @@ export class FormVisitasComponent implements OnInit {
     get nome_aluno() {return this.formVisitas.get('nome_aluno');}
     get dia() { return this.formVisitas.get('dia'); }
     get sala() { return this.formVisitas.get('sala'); }
-    get _aluno() { return this.formVisitas.get('_aluno'); }
+    // get keyAluno() { return this.formVisitas.get('nomeAluno'); }
+    get frmKeyAluno() { return this.formVisitas.get('frmKeyAluno'); }
+    get frmNomeAluno() { return this.formVisitas.get('frmNomeAluno'); }
     get materiaKey() { return this.formVisitas.get('materiaKey'); }
     get materiaNome() { return this.formVisitas.get('materiaNome'); }
     get hora_entrada() { return this.formVisitas.get('hora_entrada'); }
@@ -95,10 +101,10 @@ export class FormVisitasComponent implements OnInit {
     criarFormulario() {
       this.key = null;
       this.formVisitas = this.formBuilder.group({
-        nome_aluno: [''],
         dia: ['', Validators.required],
         sala: [''],
-        _aluno:[''],
+        frmNomeAluno:[''],
+        frmKeyAluno: [''],
         materiaKey: ['', Validators.required],
         materiaNome: [''],
         hora_entrada: ['', Validators.required],
@@ -132,20 +138,42 @@ export class FormVisitasComponent implements OnInit {
       this.usuarios = this.visitasService.getByAluno(this.nome_aluno_busca);
     }
 
-    onSubmit() {
-      if (this.formVisitas.valid) {
-      //  let result: Promise<{}>;
+    getUsuarioDados(){
+      const subscribe = this.visitasService.getDadosUsuarioAtual(this.keyAluno)
+      .subscribe((dados: any) => {
+      subscribe.unsubscribe();
+      console.log(dados);
+      this.nomeAluno = dados.nome;
+      console.log(this.nomeAluno);
+      // this.frmNomeAluno.setValue(this.nomeAluno);
+      // this.comunicados = this.comunicadosService.getComunicadosPorTurma(this.turmaKey);
+      this.mandarbanco();
+    });
 
-        if (this.key) {
-          this.visitasService.update(this.formVisitas.value, this.key);
-        } else {
-          this.visitasService.insert(this.formVisitas.value);
+
+  }
+
+    mandarbanco(){
+      console.log(this.keyAluno);
+      this.frmKeyAluno.setValue(this.keyAluno);
+      this.frmNomeAluno.setValue(this.nomeAluno);
+        if (this.formVisitas.valid) {
+        //  let result: Promise<{}>;
+
+          if (this.key) {
+            this.visitasService.update(this.formVisitas.value, this.key);
+          } else {
+            this.visitasService.insert(this.formVisitas.value);
+          }
+          this.criarFormulario();
+
+          this.router.navigate(['plantoes/visitas']);
+          this.toastr.success('Plantão salvo com sucesso!!!');
         }
-        this.criarFormulario();
+    }
+  onSubmit() {
+    this.getUsuarioDados();
 
-        this.router.navigate(['plantoes/visitas']);
-        this.toastr.success('Plantão salvo com sucesso!!!');
-      }
     }
 
 }

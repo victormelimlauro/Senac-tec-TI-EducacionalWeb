@@ -20,7 +20,7 @@
         <tbody>
           <tr *ngFor="let usuario of usuarios | async">
             <td>
-              <input class="form-check-input" type="radio" [(ngModel)]="_aluno" value={{usuario.key}}>
+              <input class="form-check-input" type="radio" [(ngModel)]="keyAluno" value={{usuario.key}}>
               <label class="form-check-label" for="proprietarios">
                 Selecione
               </label>
@@ -65,7 +65,7 @@
         <label for="professorKey">Professor</label>
         <select class="form-control" id="professorKey" formControlName="professorKey" (change)="setProfessorNome($event.target.selectedOptions)">
           <option value="">- Escolher -</option>
-          <option *ngFor="let usuario of usuarios | async" [value]="usuario.key">{{ usuario.nome}}</option>
+          <option *ngFor="let professor of professores | async" [value]="professor.key">{{ professor.nome}}</option>
         </select>
       </div>
       <div *ngIf="professorKey.invalid && (professorKey.dirty || professorKey.touched)" class="alert alert-danger">

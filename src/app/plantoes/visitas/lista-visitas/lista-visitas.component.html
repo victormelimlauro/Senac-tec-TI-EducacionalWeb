@@ -15,7 +15,7 @@
             <th scope="col">Hora saída</th>
             <th scope="col">Professor</th>
             <th scope="col">Sala</th>
-            <th scope="col"></th>
+            <!-- <th scope="col"></th> -->
             <th scope="col"></th>
         </tr>
       </thead>
@@ -23,16 +23,16 @@
         <tr *ngFor="let visita of visitas | async" >
 
           <td>{{ visita.dia }}</td>
-          <td>{{ visita.nome_aluno }}</td>
+          <td>{{ visita.frmNomeAluno }}</td>
           <td>{{ visita.materiaNome }}</td>
           <td>{{ visita.hora_entrada }}</td>
           <td>{{ visita.hora_saida }}</td>
           <td>{{ visita.professorNome }}</td>
           <td>{{ visita.sala }}</td>
 
-          <td class="edit">
+          <!-- <td class="edit">
             <a class="btn btn-warning text-white" role="button" [routerLink]="['/plantoes/visitas/editar', visita.key]"><i class="far fa-edit"></i>Editar</a>
-          </td>
+          </td> -->
           <td class="delete">
             <button class="btn btn-danger" (click)="remover(visita.key)"><i class="far fa-trash-alt"></i>Excluir</button>
           </td>

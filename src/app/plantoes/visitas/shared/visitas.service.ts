@@ -1,3 +1,4 @@
+import { AngularFireAuth } from '@angular/fire/auth';
 import { FirebasePath } from './../../../core/shared/firebase-path';
 import { Injectable } from '@angular/core';
 import { AngularFireList, AngularFireDatabase} from '@angular/fire/database';
@@ -10,7 +11,7 @@ import { Observable } from 'rxjs';
 })
 export class VisitasService {
   visitasRef: AngularFireList<any>;
-  constructor(private db: AngularFireDatabase) {
+  constructor(private db: AngularFireDatabase, private afAuth: AngularFireAuth) {
     this.visitasRef = this.db.list('plantoes_visitas/');
   }
 
@@ -42,6 +43,14 @@ export class VisitasService {
 
   }
 
+  getDadosUsuarioAtual(uid: string){
+    const path = `${FirebasePath.USUARIOS}${uid}`;
+    return this.db.object(path).snapshotChanges().pipe(
+      map(change => {
+        return ({ key: change.key, ...change.payload.val() });
+      })
+    );
+}
 
   getByAluno(aluno: string)  {
     // return this.db.list(FirebasePath.CLIENTES, q => q.orderByChild('name').equalTo(aluno))
