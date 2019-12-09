@@ -35,10 +35,10 @@ export class FormPlantoesComponent implements OnInit {
       this.usuarios = this.plantoesService.getProfessor();
       this.materias = this.materiasService.getAll();
       this.criarFormulario();
-      this.title= "Nova matéria";
+      this.title= "Novo plantão";
       this.key = this.route.snapshot.paramMap.get('key');
       if (this.key) {
-        this.title= "Editar matéria";
+        this.title= "Editar plantão";
         const subscribe = this.plantoesService.getByKey(this.key)
           .subscribe((plantoes: any) => {
 

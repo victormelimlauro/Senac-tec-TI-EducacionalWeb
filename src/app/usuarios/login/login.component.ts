@@ -11,8 +11,8 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class LoginComponent implements OnInit {
   formLogin: FormGroup;
-
-  constructor(
+  tipo: string;
+  constructor(private usuario: UsuarioService,
     private formBuilder: FormBuilder, private usuarioService: UsuarioService,
     private router: Router, private toast: ToastrService) { }
 
@@ -29,12 +29,37 @@ export class LoginComponent implements OnInit {
       senha: ['', [Validators.required]]
     });
   }
+  getUsuarioDados(){
+    const subscribe = this.usuarioService.getDadosUsuarioAtual()
+    .subscribe((dados: any) => {
+    subscribe.unsubscribe();
+    console.log(dados);
+    this.tipo = dados.tipo;
+    console.log(this.tipo);
+    if(this.tipo =="aluno"){
+      this.toast.error("Acesso não autorizado");
+      this.sair();
+      this.toast.error("Acesso não autorizado");
+    } 
+    else {
+      this.router.navigate(['/dashboard']);
+    }
+  });
 
+}
+  sair(){
+    this.usuario.logout()
+    .then( ()=>{
+        this.router.navigate(['/login']);
+    });
+
+  }
   onSubmit() {
     if (this.formLogin.valid) {
       this.usuarioService.login(this.formLogin.value.email, this.formLogin.value.senha)
         .then(() => {
-          this.router.navigate(['/dashboard']);
+          this.getUsuarioDados();
+
         })
         .catch((mensagem: string) => {
           this.toast.error(mensagem);

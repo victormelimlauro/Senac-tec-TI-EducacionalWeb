@@ -59,11 +59,12 @@ export class PlantoesService {
 
   getProfessor(tipo: string = "professor") {
     return this.db.list(FirebasePath.USUARIOS, q => {
-      if (tipo) {
+      // if (tipo) {
         return q.orderByChild('tipo').equalTo(tipo);
-      } else {
-        return q.orderByChild('diaNum');
-      }
+      // } 
+      // else {
+      //   return q.orderByChild('diaNum');
+      // }
     }).snapshotChanges().pipe(
       map(changes => {
         return changes.map(m => ({key: m.payload.key, ...m.payload.val() }));

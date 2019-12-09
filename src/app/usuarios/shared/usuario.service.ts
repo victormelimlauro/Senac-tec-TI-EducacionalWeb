@@ -27,7 +27,7 @@ export class UsuarioService {
           const path = `${this.PATH}${this.afAuth.auth.currentUser.uid}`;
 
           if (usuario.tipo=="aluno"){
-            this.db.object(path).update({ nome: usuario.nome, email: usuario.email, tipo:usuario.tipo, atributoKey:usuario.turma, atributoNome: usuario.turmaNome})
+            this.db.object(path).update({ nomeTipo: usuario.NomeTipo, nome: usuario.nome, email: usuario.email, tipo:usuario.tipo, atributoKey:usuario.turma, atributoNome: usuario.turmaNome})
           } else if (usuario.tipo=="professor"){
             this.db.object(path).update({ nome: usuario.nome, email: usuario.email, tipo: usuario.tipo, atributoKey: usuario.materia, atributoNome: usuario.materiaNome})
           } else {
@@ -103,6 +103,8 @@ export class UsuarioService {
     );
   }
 
+
+
   getTipoDadosUsuario(email: string) {
     return this.db.list(FirebasePath.USUARIOS, q => {
          return q.orderByChild('email').equalTo(email);
@@ -119,11 +121,11 @@ export class UsuarioService {
             const path = `${this.PATH}${key}`;
 
             if (usuario.tipo=="aluno"){
-              this.db.object(path).update({ nome: usuario.nome, email: usuario.email, tipo:usuario.tipo, atributoKey:usuario.turma, atributoNome: usuario.turmaNome})
+              this.db.object(path).update({ nome: usuario.nome, email: usuario.email, tipo:usuario.tipo, atributoKey:usuario.turma, atributoNome: usuario.turmaNome, nomeTipo: usuario.NomeTipo})
             } else if (usuario.tipo=="professor"){
-              this.db.object(path).update({ nome: usuario.nome, email: usuario.email, tipo: usuario.tipo, atributoKey: usuario.materia, atributoNome: usuario.materiaNome})
+              this.db.object(path).update({ nome: usuario.nome, email: usuario.email, tipo: usuario.tipo, atributoKey: usuario.materia, atributoNome: usuario.materiaNome, nomeTipo: usuario.NomeTipo})
             } else {
-              this.db.object(path).update({ nome: usuario.nome, email: usuario.email, tipo:usuario.tipo})
+              this.db.object(path).update({ nome: usuario.nome, email: usuario.email, tipo:usuario.tipo, bomeTipo: usuario.NomeTipo})
             }
             resolve();
           // .catch((error: any) => {
@@ -182,4 +184,13 @@ export class UsuarioService {
     );
 
   }
+  getDadosUsuarioAtual(){
+    const path = `${FirebasePath.USUARIOS}${this.afAuth.auth.currentUser.uid}`;
+    return this.db.object(path).snapshotChanges().pipe(
+      map(change => {
+        return ({ key: change.key, ...change.payload.val() });
+      })
+    );
+}
+
 }

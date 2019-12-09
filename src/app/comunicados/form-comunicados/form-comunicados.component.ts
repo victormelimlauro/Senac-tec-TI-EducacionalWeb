@@ -29,10 +29,10 @@ export class FormComunicadosComponent implements OnInit {
     ngOnInit() {
       this.turmas = this.turmasService.getAll();
       this.criarFormulario();
-      this.title= "Nova turma";
+      this.title= "Nova comunicado";
       this.key = this.route.snapshot.paramMap.get('key');
       if (this.key) {
-        this.title= "Editar turma";
+        this.title= "Editar comunicado";
         const comunicadosSubscribe = this.comunicadosService.getByKey(this.key)
           .subscribe((comunicados:any) => {
             this.formComunicados.setValue({

@@ -67,6 +67,8 @@ export class CriarContaComponent implements OnInit {
             materiaNome:"",
             turma: "",
             turmaNome: "",
+
+            NomeTipo:"",
             atributo: "",
             atributoNome: "",
             });
@@ -80,6 +82,7 @@ export class CriarContaComponent implements OnInit {
                 materia:"",
                 materiaNome:"",
                 turma:usuarios.atributoKey,
+                NomeTipo:"",
                 turmaNome:usuarios.atributoNome,
                 atributo: "",
                 atributoNome: "",
@@ -96,6 +99,7 @@ export class CriarContaComponent implements OnInit {
                   materia:usuarios.atributoKey,
                   materiaNome:usuarios.atributoNome,
                   turma: "",
+                  NomeTipo:"",
                   turmaNome: "",
                   atributo: "",
                   atributoNome: "",
@@ -123,6 +127,7 @@ export class CriarContaComponent implements OnInit {
   get turmaNome() { return this.formCriarConta.get('turmaNome'); }
   get materia() { return this.formCriarConta.get('materia'); }
   get materiaNome() { return this.formCriarConta.get('materiaNome'); }
+  get NomeTipo() { return this.formCriarConta.get('NomeTipo'); }
 
 
   criarFormulario() {
@@ -135,6 +140,7 @@ export class CriarContaComponent implements OnInit {
       materiaNome: [''],
       turma: [''],
       turmaNome:[''],
+      NomeTipo:[''],
       atributo:[''],
       atributoNome:[''],
     });
@@ -149,6 +155,7 @@ export class CriarContaComponent implements OnInit {
       materiaNome: [''],
       turma: [''],
       turmaNome:[''],
+      NomeTipo:[''],
       atributo:[''],
       atributoNome:[''],
     });
@@ -197,9 +204,14 @@ export class CriarContaComponent implements OnInit {
       this.materiaNome.setValue('');
     }
   }
-
+  setNomeTipo(NomeTipo: string = null, nome: any = null) {
+  nome= this.nome.value;
+  NomeTipo= this.tipo.value.concat(nome);
+  this.NomeTipo.setValue(NomeTipo);
+  }
 
   onSubmit() {
+    this.setNomeTipo();
     if (this.formCriarConta.valid) {
 
       if (this.key) {

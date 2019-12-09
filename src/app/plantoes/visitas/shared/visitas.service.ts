@@ -52,9 +52,10 @@ export class VisitasService {
     );
 }
 
-  getByAluno(aluno: string)  {
+  getByAluno(aluno: string, tipo: string="aluno", NomeTipo: string = null)  {
+    NomeTipo= tipo.concat(aluno);
     // return this.db.list(FirebasePath.CLIENTES, q => q.orderByChild('name').equalTo(aluno))
-    return this.db.list(FirebasePath.USUARIOS, q => q.orderByChild('nome').startAt(aluno).endAt(aluno+'\uf88f'))
+    return this.db.list(FirebasePath.USUARIOS, q => q.orderByChild('nomeTipo').startAt(NomeTipo).endAt(NomeTipo+'\uf88f'))
       .snapshotChanges().pipe(
         map(changes => {
           return changes.map(m => ({ key: m.payload.key, ...m.payload.val() }))
